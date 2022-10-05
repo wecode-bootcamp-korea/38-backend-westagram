@@ -22,7 +22,7 @@ myDataSource.initialize()
     console.log('Data Source has been initialized!');
   });
 
-app = express(); 
+const app = express(); 
 
 app.use(express.json());
 app.use(cors());
