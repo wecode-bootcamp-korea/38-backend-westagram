@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode,vim,macos,zsh,linux,visualstudio,node,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,visualstudiocode,vim,macos,zsh,linux,visualstudio,node,dotenv
 
+# dbmate #
+schema.sql
+
 ### dotenv ###
 .env
 
