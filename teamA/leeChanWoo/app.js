@@ -66,6 +66,21 @@ app.post('/posts', async (req, res) => {
      res.status(201).json({ message : "postCreated" });
 });
 
+// 전체 게시글 조회하기
+app.get('/posts', async(req, res) => {
+    await myDataSource.query(
+	`SELECT 
+            users.id AS userId,
+            users.profile_image AS userProfileImage,
+            posts.id AS postingId,
+            posts.title AS postTitle,
+            posts.content AS postingContent
+        FROM posts
+        INNER JOIN users ON users.id=posts.user_id`
+		,(err, rows) => {
+      res.status(200).json(rows);
+	});
+});
 
 
 
