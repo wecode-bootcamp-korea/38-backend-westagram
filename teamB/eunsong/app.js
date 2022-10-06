@@ -48,8 +48,23 @@ app.post("/users", async (req, res, next) => {
     `,
     [ name, email, profile_image, password ]
   );
-
       res.status(201).json({ message : "userCreated" });
+})
+
+// Create a post
+app.post("/posts", async (req, res, next) => {
+  const { title, content, user_id } = req.body
+
+  await myDataSource.query(
+    `INSERT INTO posts(
+      title,
+      content,
+      user_id
+    ) VALUES (?, ?, ?);
+    `,
+    [ title, content, user_id ]
+  );
+      res.status(201).json({ message : "postCreated" });
 })
 
 const server = http.createServer(app)
