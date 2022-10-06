@@ -48,6 +48,20 @@ app.post('/signup' , async (req,res) => {
       res.status(201).json({message : 'user created'});
 })
 
+app.post('/posts' , async (req,res) => {
+  const {title,content,user_id} = req.body;
+
+  await appDataSource.query(
+    `INSERT INTO posts(
+      title,
+      content,
+      user_id) VALUES (?,?,?)
+      `,
+      [title,content,user_id]
+  );
+  res.status(200).json({message :'post Created'});
+})
+
 
 const start = async () => {
   try {
