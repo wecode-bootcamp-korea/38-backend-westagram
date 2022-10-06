@@ -8,7 +8,7 @@ dotenv.config();
 
 const { DataSource } = require('typeorm');
 
-const myDataSource = new DataSource({
+const mysqlDataSource = new DataSource({
   type: process.env.TYPOEORM_CONNECTION,
   host: process.env.TYPOEORM_HOST,
   port: process.env.TYPOEORM_PORT,
@@ -17,7 +17,7 @@ const myDataSource = new DataSource({
   database: process.env.TYPOEORM_DATABASE
 });
 
-myDataSource.initialize()
+mysqlDataSource.initialize()
   .then(() => {
     console.log('Data Source has been initialized!');
   });
