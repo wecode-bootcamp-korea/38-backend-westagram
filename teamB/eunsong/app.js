@@ -39,8 +39,6 @@ app.get("/ping", (req, res) => {
 app.post("/users", async (req, res, next) => {
   const { name, email, profile_image, password } = req.body
 
-  // console.log(req)
-
   await database.query(
     `INSERT INTO users(
       name,
@@ -51,7 +49,7 @@ app.post("/users", async (req, res, next) => {
     `,
     [ name, email, profile_image, password ]
   );
-      res.status(201).json({ message : "userCreated" });
+  res.status(201).json({ message : "userCreated" });
 })
 
 // Create a post
@@ -68,7 +66,7 @@ app.post("/posts", async (req, res, next) => {
     `,
     [ title, content, user_id, posting_image ]
   );
-      res.status(201).json({ message : "postCreated" });
+  res.status(201).json({ message : "postCreated" });
 })
 
 // Get all posts
@@ -84,7 +82,7 @@ app.get("/posts", async (req, res) => {
         FROM posts p
         JOIN users u ON p.user_id=u.id`
     ,(err, rows) => {
-            res.status(200).json(rows);
+      res.status(200).json(rows);
     }
   )
 });
