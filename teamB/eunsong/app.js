@@ -53,19 +53,38 @@ app.post("/users", async (req, res, next) => {
 
 // Create a post
 app.post("/posts", async (req, res, next) => {
-  const { title, content, user_id } = req.body
+  const { title, content, user_id, posting_image } = req.body
 
   await myDataSource.query(
     `INSERT INTO posts(
       title,
       content,
-      user_id
-    ) VALUES (?, ?, ?);
+      user_id,
+      posting_image
+    ) VALUES (?, ?, ?, ?);
     `,
-    [ title, content, user_id ]
+    [ title, content, user_id, posting_image ]
   );
       res.status(201).json({ message : "postCreated" });
 })
+
+// Get all posts
+app.get("/posts", async (req, res) => {
+  await myDataSource.manager.query(
+    `SELECT
+            p.id AS postingId,
+            p.user_id AS userId,
+            p.posting_image AS postingImageUrl,
+            p.title AS postingTitle,
+            p.content AS postingContent,
+            u.profile_image AS userProfileImage
+        FROM posts p
+        JOIN users u ON p.user_id=u.id`
+    ,(err, rows) => {
+            res.status(200).json(rows);
+    }
+  )
+});
 
 const server = http.createServer(app)
 const PORT = process.env.PORT;
