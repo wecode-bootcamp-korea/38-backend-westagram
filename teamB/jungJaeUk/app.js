@@ -95,6 +95,23 @@ app.post('/signup', async (req, res) => {
   );
   res.status(201).json({ "message" : "userCreated" });
 });
+//[POST] post add
+app.post('/posts/add', async (req, res) => {
+  const { title, content, user_id } = req.body;
+
+  await myDataSource.query(
+    `
+    INSERT INTO posts (
+      title,
+      content,
+      user_id
+    ) VALUES ( ?, ?, ? );
+    `,
+    [ title, content, user_id ]
+  );
+
+  res.status(201).json({ "message" : "postCreated" });
+});
 //[POST] post update 
 app.post('/posts/update', async (req, res) => {
   const { user_id, post_id, content } = req.body;
