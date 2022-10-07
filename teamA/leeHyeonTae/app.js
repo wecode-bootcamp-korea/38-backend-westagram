@@ -1,13 +1,24 @@
+// 환경변수 필요한 dotenv 최상위로 올리는게 좋다(cuz: 가독성)
+require('dotenv').config();
+
+// built-in package(내장함수 require 했던것들)
+
+
+// 3rd-party package
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const dotenv = require('dotenv');
-dotenv.config();
 const morgan = require('morgan');
+
+
+
+const app = express();
+
+
 const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+
 
 const { DataSource } = require('typeorm');
 
