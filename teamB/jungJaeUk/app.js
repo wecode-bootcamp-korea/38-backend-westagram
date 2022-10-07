@@ -33,7 +33,7 @@ app.get('/ping', async (req, res) => {
 });
 //[GET] posts list all 
 app.get('/posts/list/all', async (req, res) => {
-  await myDataSource.query(
+  await mysqlDataSource.query(
     `
     SELECT
     users.id as userId,
@@ -54,7 +54,7 @@ app.get('/posts/list/userid', async (req, res) => {
   const { id } = req.body;
 
   await Promise.all([
-    myDataSource.query(
+    mysqlDataSource.query(
       `
       SELECT
       posts.id as postingId,
@@ -63,7 +63,7 @@ app.get('/posts/list/userid', async (req, res) => {
       FROM posts WHERE user_id=${id};
       `
     ),
-    myDataSource.query(
+    mysqlDataSource.query(
       `
       SELECT
       users.id as userId,
@@ -82,7 +82,7 @@ app.get('/posts/list/userid', async (req, res) => {
 app.post('/signup', async (req, res) => {
   const { name, email, profile_image, password } = req.body;
 
-  await myDataSource.query(
+  await mysqlDataSource.query(
     `
     INSERT INTO users (
       name,
@@ -99,7 +99,7 @@ app.post('/signup', async (req, res) => {
 app.post('/posts/add', async (req, res) => {
   const { title, content, user_id } = req.body;
 
-  await myDataSource.query(
+  await mysqlDataSource.query(
     `
     INSERT INTO posts (
       title,
@@ -117,14 +117,14 @@ app.post('/posts/update', async (req, res) => {
   const { user_id, post_id, content } = req.body;
 
   await Promise.all([
-    await myDataSource.query(
+    await mysqlDataSource.query(
       `
       UPDATE posts
       SET content="${content}"
       WHERE user_id=${user_id} AND id=${post_id};
       `
     ),
-    myDataSource.query(
+    mysqlDataSource.query(
       `
       SELECT
       users.id as userId,
@@ -146,7 +146,7 @@ app.post('/posts/update', async (req, res) => {
 app.post('/posts/like', async (req, res) => {
   const { post_id, user_id } = req.body;
 
-  await myDataSource.query(
+  await mysqlDataSource.query(
     `
     INSERT INTO likes (user_id, post_id)
     VALUES (${user_id}, ${post_id});
@@ -161,7 +161,7 @@ app.post('/posts/like', async (req, res) => {
 app.delete('/posts/delete', async (req, res) => {
   const { post_id } = req.body;
 
-  await myDataSource.query(
+  await mysqlDataSource.query(
     `
     DELETE FROM posts
     WHERE id=${post_id};
