@@ -89,7 +89,8 @@ app.get('/posts/:userId', async (req, res) => {
   res.status(200).json({ data : users });
 });
 
-app.put('/users/:userId', async (req, res) => {
+// post update
+app.put('/posts/:userId', async (req, res) => {
   const userId = req.params.userId;
   const { content } = req.body;
   await appDataSource.query(
@@ -114,6 +115,17 @@ app.put('/users/:userId', async (req, res) => {
     ,(err, rows) => {
       res.status(200).json(rows);
     });
+});
+
+// post delete
+app.delete('/posts/:postId', async(req, res) => {
+	const { postId } = req.params;
+
+  await appDataSource.query(
+  `DELETE FROM posts
+  WHERE posts.id = ${postId}
+  `); 
+  res.status(204).json({ message : "postingDeleted" });
 });
 
 
