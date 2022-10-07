@@ -42,9 +42,23 @@ app.post('/posts',async (req,res) => {
     );
     res.status(201).json({message: "postCreated"});
 })
+app.get('/search' ,async (req,res) => {
 
-
-
+  await appDataSource.query(
+    `SELECT
+            posts.id as userId ,
+            users.profile_image as userProfileImage,
+            posts.id as postingId,
+            posts.posting_image as postingImageUrl,
+            posts.content as postingContent
+            FROM (users, posts)
+            WHERE users.id=posts.user_id;
+            `
+  ,
+  (err,row) => {
+  res.status(201).json({data: row });
+  });
+})
 
 const start = async () => {
   try {
