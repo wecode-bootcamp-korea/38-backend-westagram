@@ -145,6 +145,18 @@ app.patch("/posts/:userId/:postId", async (req, res) => {
   return res.status(201).json(result);
 })
 
+// Delete a post
+app.delete('/posts/:postId', async(req, res) => {
+  const postId = req.params.postId;
+
+  await database.query(
+    `DELETE FROM posts
+    WHERE posts.id=${postId}`
+  );
+
+  return res.status(200).json({ message : "postingDeleted" });
+})
+
 const server = http.createServer(app)
 const PORT = process.env.PORT;
 
