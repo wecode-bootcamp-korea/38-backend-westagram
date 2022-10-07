@@ -143,4 +143,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+# schema.sql
+
+db/schema.sql
+
 # End of https://www.toptal.com/developers/gitignore/api/node,dotenv
