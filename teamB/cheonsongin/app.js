@@ -87,7 +87,34 @@ app.get('/posts/:userId', async (req, res) => {
   );
   users[0].postings = posts;
   res.status(200).json({ data : users });
-})
+});
+
+app.put('/users/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const { content } = req.body;
+  await appDataSource.query(
+    `UPDATE posts
+      SET
+        content= ?
+      WHERE
+        id=${userId}
+      AND user_id=${userId};
+    `,
+    [ content ]
+  );
+  await appDataSource.query(
+    `SELECT
+      u.id AS userId,
+      u.name AS userName,
+      p.id AS postingId,
+      p.title AS postingTitle,
+      p.content AS postingContent
+    FROM posts p
+    INNER JOIN users u ON p.id = u.id`
+    ,(err, rows) => {
+      res.status(200).json(rows);
+    });
+});
 
 
 const server = http.createServer(app);
