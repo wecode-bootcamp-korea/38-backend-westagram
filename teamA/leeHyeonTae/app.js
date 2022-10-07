@@ -1,10 +1,5 @@
 // 환경변수 필요한 dotenv 최상위로 올리는게 좋다(cuz: 가독성)
 require('dotenv').config();
-
-// built-in package(내장함수 require 했던것들)
-
-
-// 3rd-party package
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
