@@ -37,12 +37,9 @@ app.post('/posts',async (req,res) => {
             user_id
         ) VALUES ( ?,?,? );`
         ,
-        [ title, content, user_id ],
-        (err,result)=> {
-            if(err) return console.log(err);
-            res.status(200).json({message :'postCreated' });
-        }
+        [ title, content, user_id ]
     );
+    
 })
 
 
