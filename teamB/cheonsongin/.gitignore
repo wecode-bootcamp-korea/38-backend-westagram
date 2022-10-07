@@ -275,6 +275,6 @@ tags
 [._]\*.un~
 
 ### dbmate
-schema.sql
+db/schema.sql
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,vim,node,dotenv,linux
