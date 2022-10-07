@@ -28,16 +28,17 @@ app.use(express.json());
 
 
 app.post('/posts',async (req,res) => {
-    const { title, content, user_id} = req.body;
+    const { title, content, posting_image,user_id} = req.body;
 
     await appDataSource.query(
         `INSERT INTO posts(
             title,
             content,
+            posting_image,
             user_id
-        ) VALUES ( ?,?,? );`
+        ) VALUES ( ?,?,?,? );`
         ,
-        [ title, content, user_id ]
+        [ title, content, posting_image, user_id ]
     );
     res.status(201).json({message: "postCreated"});
 })
@@ -51,8 +52,11 @@ app.get('/search' ,async (req,res) => {
             posts.id,
             posts.content
             FROM (users, posts)
-            WHERE users.id=posts.id`
-  );
+            WHERE users.id=posts.id;`
+  ,
+  (err,row) => {
+  res.status(201).json({data: row });
+  });
 })
 
 
