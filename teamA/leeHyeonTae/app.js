@@ -45,8 +45,14 @@ app.post('/posts',async (req,res) => {
 app.get('/search' ,async (req,res) => {
 
   await appDataSource.query(
-    ``
-  )
+    `SELECT
+            users.id,
+            users.profile_image,
+            posts.id,
+            posts.content
+            FROM (users, posts)
+            WHERE users.id=posts.id`
+  );
 })
 
 
