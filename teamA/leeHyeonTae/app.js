@@ -39,9 +39,15 @@ app.post('/posts',async (req,res) => {
         ,
         [ title, content, user_id ]
     );
-    
+    res.status(201).json({message: "postCreated"});
 })
 
+app.get('/search' ,async (req,res) => {
+
+  await appDataSource.query(
+    ``
+  )
+})
 
 
 const start = async () => {
