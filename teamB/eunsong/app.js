@@ -87,6 +87,32 @@ app.get("/posts", async (req, res) => {
   )
 });
 
+// Get posts by user
+app.get("/posts/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  
+  const user = await database.manager.query(
+    `SELECT
+            u.id AS userId,
+            u.profile_image AS userProfileImage
+        FROM users u
+        WHERE id=${userId}`
+  );
+
+  const postings = await database.manager.query(
+    `SELECT
+            p.id AS postingId,
+            p.posting_image AS postingImageUrl,
+            p.content AS postingContent
+        FROM posts p
+        WHERE user_id=${userId}`
+  );
+
+  user[0].postings = postings;
+
+  return res.status(200).json(user)
+});
+
 const server = http.createServer(app)
 const PORT = process.env.PORT;
 
