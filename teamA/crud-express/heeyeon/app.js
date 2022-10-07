@@ -1,5 +1,4 @@
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 const http = require('http');
 
@@ -18,9 +17,9 @@ const myDataSource = new DataSource({
 })
 
 myDataSource.initialize()
-.then(() => {
-    console.log('Data Source has been initialized!')
-});
+    .then(() => {
+        console.log('Data Source has been initialized!')
+    });
 
 const app = express()
 
@@ -50,11 +49,27 @@ app.post('/users/signup', async (req, res, next) => {
 
 })
 
+app.post('/posts/post', async (req, res, next) => {
+    const {id, title, content, user_id} = req.body
+
+    await myDataSource.query(
+        `INSERT INTO posts(
+            id,
+            title,
+            content,
+            user_id
+        ) VALUES (?, ?, ?, ?);
+        `,
+        [id, title, content, user_id]
+    );
+
+    res.status(201).json({ message : "postCreated" })
+
+})
+
 
 const server = http.createServer(app);
 const PORT = process.env.PORT;
-
-
 
 const start = async () => {
     try {
