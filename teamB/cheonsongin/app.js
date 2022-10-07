@@ -67,6 +67,29 @@ app.get('/posts/get', async (req, res) => {
   );
 });
 
+// user 게시물 조회
+app.get('/posts/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const users = await appDataSource.query(
+    `SELECT
+      u.id AS userId,
+      u.profile_image AS userProfileImage
+      FROM users u
+      WHERE id=${userId}`
+  );
+  const posts = await appDataSource.query(
+    `SELECT
+      p.id AS postingId,
+      p.post_image AS postingImageUrl,
+      p.content AS postingContent
+      FROM posts p
+      WHERE user_id=${userId}`
+  );
+  users[0].postings = posts;
+  res.status(200).json({ data : users });
+})
+
+
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
