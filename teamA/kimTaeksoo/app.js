@@ -15,7 +15,6 @@ app.use(cors());
 app.use(morgan("dev"));
 
 const PORT = process.env.PORT;
-
 const myDataSource = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
   host: process.env.TYPEORM_HOST,
@@ -34,18 +33,21 @@ myDataSource
     console.log(err);
   });
 
-// health check
 app.get("/ping", (req, res, next) => {
   res.json({ message: "pong" });
 });
 
-// sign-up
 app.post("/sign-up", async (req, res, next) => {
-  const { userId, password } = req.body;
+  const { name, email, profile_image, password } = req.body;
 
   await myDataSource.query(
-    `INSERT INTO users (user_id, password) VALUES (?, ?)`,
-    [userId, password]
+    `INSERT INTO users (
+      name, 
+      email, 
+      profile_image, 
+      password
+      ) VALUES (?, ?, ?, ?)`,
+    [name, email, profile_image, password]
   );
 
   res.status(201).json({ message: "userCreated" });
