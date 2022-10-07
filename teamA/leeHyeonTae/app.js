@@ -43,21 +43,7 @@ app.post('/posts',async (req,res) => {
     res.status(201).json({message: "postCreated"});
 })
 
-app.get('/search' ,async (req,res) => {
 
-  await appDataSource.query(
-    `SELECT
-            users.id,
-            users.profile_image,
-            posts.id,
-            posts.content
-            FROM (users, posts)
-            WHERE users.id=posts.id;`
-  ,
-  (err,row) => {
-  res.status(201).json({data: row });
-  });
-})
 
 
 const start = async () => {
