@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config()
 
 const { DataSource } = require('typeorm');
+const { title } = require("process");
 
 const database = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
@@ -112,6 +113,37 @@ app.get("/posts/:userId", async (req, res) => {
 
   return res.status(200).json(user)
 });
+
+// Update a post
+app.patch("/posts/:userId/:postId", async (req, res) => {
+  const userId = req.params.userId;
+  const postId = req.params.postId;
+
+  const { title, content } = req.body
+
+  await database.manager.query(
+    `UPDATE posts
+    SET
+      title=?,
+      content=?
+    WHERE user_id=${userId} AND id=${postId}`,
+    [ title, content ]
+  );
+  
+  const result = await database.manager.query(
+    `SELECT
+            p.user_id AS userId,
+            u.name AS userName,
+            p.id AS postingId,
+            p.title AS postingTitle,
+            p.content AS postingContent
+        FROM posts p
+        JOIN users u ON p.user_id=u.id
+        WHERE p.user_id=${userId} AND p.id=${postId}`
+  );
+
+  return res.status(201).json(result);
+})
 
 const server = http.createServer(app)
 const PORT = process.env.PORT;
