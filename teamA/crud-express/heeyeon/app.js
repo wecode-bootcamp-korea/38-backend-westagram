@@ -30,6 +30,22 @@ app.get('/ping', cors(), function (req, res, next) {
     res.status(200).json({ message : 'pong '})
 });
 
+app.get('/posts/lists', async (req, res, next) => {
+
+    await myDataSource.query(
+        `SELECT
+            p.user_id As userId,
+            u.profile_image As userProfileImage,
+            p.id AS postingId,
+            p.posting_img_url As postingImageUrl,
+            p.content As postingContent
+        FROM users u, posts p WHERE p.user_id=u.id;`
+    ,(err, rows) => {
+            res.status(200).json({ "data" : rows });
+    })
+});
+
+
 app.post('/users/signup', async (req, res, next) => {
     const {id, name, email, profile_image, password} = req.body
 
@@ -47,7 +63,7 @@ app.post('/users/signup', async (req, res, next) => {
 
     res.status(201).json({ message : "userCreated" })
 
-})
+});
 
 app.post('/posts/post', async (req, res, next) => {
     const {id, title, content, user_id} = req.body
@@ -65,7 +81,7 @@ app.post('/posts/post', async (req, res, next) => {
 
     res.status(201).json({ message : "postCreated" })
 
-})
+});
 
 
 const server = http.createServer(app);

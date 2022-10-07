@@ -9,6 +9,7 @@ CREATE TABLE posts (
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
+ALTER TABLE posts ADD posting_image_url VARCHAR(3000) NULL;
 
 -- migrate:down
 DROP TABLE posts;
