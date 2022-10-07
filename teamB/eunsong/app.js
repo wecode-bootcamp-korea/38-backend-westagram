@@ -157,6 +157,22 @@ app.delete('/posts/:postId', async(req, res) => {
   return res.status(200).json({ message : "postingDeleted" });
 })
 
+// Create a like
+app.post("/likes/:userId/:postId", async (req, res) => {
+  const userId = req.params.userId;
+  const postId = req.params.postId;
+
+  await database.query(
+    `INSERT INTO likes(
+      user_id,
+      post_id
+      ) VALUES (?, ?);`,
+      [ userId, postId ]
+    );
+
+  return res.status(201).json({ message : "likeCreated" });
+})
+
 const server = http.createServer(app)
 const PORT = process.env.PORT;
 
