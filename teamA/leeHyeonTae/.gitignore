@@ -148,5 +148,5 @@ dist
 db/schema.sql
 
 #app_single_layered
-app_single_layered.js
+app_crud_single_layered.js
 # End of https://www.toptal.com/developers/gitignore/api/node,dotenv
