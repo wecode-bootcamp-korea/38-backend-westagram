@@ -28,4 +28,18 @@ const createPost = async (title, content, userId) => {
   );
 };
 
-module.exports = { createPost };
+const allPosts = async () => {
+  const data = await myDataSource.query(
+    `SELECT 
+        u.id as userId,
+        u.profile_image as userProfileImage,
+        p.id as postingId,
+        p.posting_image_url as postingImageUrl,
+        p.content as postingContent 
+        FROM users as u, posts as p
+        `
+  );
+  return data;
+};
+
+module.exports = { createPost, allPosts };

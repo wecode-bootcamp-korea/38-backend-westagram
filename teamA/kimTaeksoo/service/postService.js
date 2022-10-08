@@ -5,4 +5,9 @@ const posting = async (title, content, userId) => {
   return createPost;
 };
 
-module.exports = { posting };
+const allPosts = async () => {
+  const data = await postDao.allPosts();
+  return data;
+};
+
+module.exports = { posting, allPosts };
