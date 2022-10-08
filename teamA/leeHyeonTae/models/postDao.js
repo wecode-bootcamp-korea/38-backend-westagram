@@ -18,16 +18,16 @@ appDataSource.initialize()
         appDataSource.destroy();
     })
 
-    const createPost = async ( title, content, posting_image, user_id) => {
+    const createPost = async ( title, content, url_image, user_id) => {
         try{
             return await appDataSource.query(
                 `INSERT INTO posts(
                     title,
                     content,
-                    posting_image,
+                    url_image,
                     user_id
                 ) VALUES ( ?,?,?,? )`
-                , [ title, content, posting_image, user_id]
+                , [ title, content, url_image, user_id]
             )
         }
         catch (err){
@@ -37,6 +37,28 @@ appDataSource.initialize()
         }
     }
 
+    const searchPost = async () => {
+        try{
+            return await appDataSource.query(
+                `SELECT 
+                        posts.id as postingId,
+                        posts.content as postingContent,
+                        posts.url_image as postingImageUrl,
+                        posts.user_id as userId,
+                        users.profile_image as userProfileImage
+                        FROM (posts, users)
+                        WHERE users.id=posts.user_id;
+
+                `
+            )
+        }
+        catch(err){
+            const error = new Error('invalid data search check your Dao!')
+            err.statusCode = 500;
+            throw error;
+        }
+    }
+
     module.exports = {
-        createPost
+        createPost,searchPost
     }
