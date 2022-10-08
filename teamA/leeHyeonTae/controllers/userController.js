@@ -5,12 +5,12 @@ const signUp = async (req, res) => {
         const { name, email, profile_image, password } = req.body;
 
         if( !name || !email || !profile_image || !password ){
-            return res.status(400).json({ message : 'error! key_error of userController'});
+            return res.status(400).json({ message : 'Key Error'});
         }
 
         await userService.signUp( name, email, profile_image, password);
 
-        return res.status(201).json({ message: 'user signup complete! '});
+        return res.status(201).json({ message: 'User Created '});
     }
     catch (err) {
         console.log(err);
