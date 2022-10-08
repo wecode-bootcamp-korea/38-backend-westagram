@@ -10,7 +10,7 @@ const signUp = async (req, res) => {
 
         await userService.signUp( name, email, profile_image, password);
 
-        res.status(201).json({ message: 'user signup complete! '});
+        return res.status(201).json({ message: 'user signup complete! '});
     }
     catch (err) {
         console.log(err);
