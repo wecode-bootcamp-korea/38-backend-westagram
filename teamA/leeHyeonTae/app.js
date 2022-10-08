@@ -58,7 +58,34 @@ app.get('/search' ,async (req,res) => {
   (err,row) => {
   res.status(201).json({data: row });
   });
-})
+});
+
+app.get('/specific' , async (req,res) => {
+//     let postings = async () => {
+      
+//       return await appDataSource.query(`
+//     SELECT
+//             posts.id as postingId,
+//             posts.posting_image as postingImageUrl,
+//             posts.content as postingContent
+//             FROM posts,users
+//             WHERE users.id=posts.user_id`
+//     )
+// }
+// postings();
+
+    await appDataSource.query(
+    `
+    SELECT 
+            id as userId,
+            profile_image as userProfileImage,
+            FROM users;
+    `
+    ,
+    (err,row) => {
+      res.status(202).json({ data:row });
+    });
+});
 
 const start = async () => {
   try {
