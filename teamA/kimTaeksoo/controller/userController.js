@@ -17,4 +17,15 @@ const signUp = async (req, res) => {
   }
 };
 
-module.exports = { signUp };
+const userIdMatchPosts = async (req, res) => {
+  const reqUserId = req.params;
+
+  if (!reqUserId) {
+    return res.status(400).json({ message: "KET_ERROR" });
+  }
+
+  const data = await userService.userIdMatchPosts(reqUserId);
+  return res.status(200).json({ data });
+};
+
+module.exports = { signUp, userIdMatchPosts };

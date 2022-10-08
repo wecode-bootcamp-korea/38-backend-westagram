@@ -13,18 +13,20 @@ myDataSource.initialize().then(() => {
   console.log("data source has been init");
 });
 
-const createPost = async (title, content, userId) => {
+const createPost = async (title, content, userId, postingImageUrl) => {
   await myDataSource.query(
     `INSERT INTO posts (
             title,
             content,
-            user_id
+            user_id,
+            posting_image_url
         ) VALUES (
+            ?,
             ?,
             ?,
             ?
         )`,
-    [title, content, userId]
+    [title, content, userId, postingImageUrl]
   );
 };
 

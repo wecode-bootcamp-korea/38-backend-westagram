@@ -2,13 +2,13 @@ const postService = require("../service/postService");
 
 const posting = async (req, res) => {
   try {
-    const { title, content, userId } = req.body;
+    const { title, content, userId, postingImageUrl } = req.body;
 
-    if (!title || !content || !userId) {
+    if (!title || !content || !userId || !postingImageUrl) {
       return res.status(400).json({ message: "KEY_ERROR" });
     }
 
-    await postService.posting(title, content, userId);
+    await postService.posting(title, content, userId, postingImageUrl);
     return res.status(201).json({ message: "postCreated" });
   } catch (error) {
     console.log(error);
