@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos,dotenv,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,dotenv,linux
 
+### schema ###
+schema.sql
+
 ### dotenv ###
 .env
 
