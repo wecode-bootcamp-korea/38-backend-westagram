@@ -18,17 +18,17 @@ appDataSource.initialize()
     appDataSource.destroy();
   });
 
-const createUser = async ( name, email, password, profileImage ) => {
+const createPost = async ( title, post_image, content, user_id ) => {
   try {
     return await appDataSource.query(
-      `INSERT INTO users(
-        name,
-        email,
-        password,
-        profile_image
+      `INSERT INTO posts(
+        title,
+        post_image,
+        content,
+        user_id
       ) VALUES (?, ?, ?, ?);
       `,
-      [ name, email, password, profileImage ]
+      [ title, post_image, content, user_id ]
     );
   } catch (err) {
     const error = new Error('INVALID_DATA_INPUT');
@@ -38,5 +38,5 @@ const createUser = async ( name, email, password, profileImage ) => {
 };
 
 module.exports = {
-  createUser
+  createPost
 }

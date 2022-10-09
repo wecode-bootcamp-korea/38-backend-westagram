@@ -9,14 +9,14 @@ const signUp = async (name, email, password, profileImage) => {
     err.statusCode = 409;
     throw err;
   }
-    const createUser = await userDao.createUser(
-      name,
-      email,
-      password,
-      profileImage
-    );
+  const createUser = await userDao.createUser(
+    name,
+    email,
+    password,
+    profileImage
+  );
 
-    return createUser;
+  return createUser;
 };
 
 module.exports = {
