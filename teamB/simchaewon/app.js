@@ -11,6 +11,7 @@ app.use(express.json());
 
 const {DataSource} = require("typeorm");
 const { json } = require("express");
+const { isArray } = require("util");
 
 const weDataSource = new DataSource({
     type:process.env.TYPEORM_CONNECTION,
@@ -59,6 +60,22 @@ app.post("/posts", async(req, res)=>{
         );
      res.status(200).json({"message":"postCreated"});
 });
+
+app.get("/user/posts", async(req, res)=>{
+    const postingData = [];
+    const data = await weDataSource.query(
+       "SELECT users.id AS userID, users.user_profile_image, users.name, posts.id AS postId, posts.post_profile_image, posts.content, posts.user_name FROM users LEFT JOIN posts ON users.name=posts.user_name;"
+    );
+    for(let i=0; i<data.length; i++){
+        postingData[i]=[];
+        if(data[i].name===data[i].user_name) 
+    }
+
+    
+    console.log(data);
+    console.log(Array.isArray(data));
+    res.status(200).json({"user":data, "typofUser":typeof data});
+})
 
 
 const server = http.createServer(app);
