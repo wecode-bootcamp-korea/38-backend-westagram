@@ -23,9 +23,12 @@ const weDataSource = new DataSource({
 })
 
 weDataSource.initialize()
+
     .then(()=>{
         console.log("Data Source has been initialized!!!!");
-    }) .catch((err)=>{
+    }) 
+    
+    .catch((err)=>{
         console.error(err);
         weDataSource.destroy();
     });
@@ -67,8 +70,7 @@ app.get("/user/posts", async(req, res)=>{
        "SELECT users.id AS userID, users.user_profile_image, users.name, posts.id AS postId, posts.post_profile_image, posts.content, posts.user_name FROM users LEFT JOIN posts ON users.name=posts.user_name;"
     );
     for(let i=0; i<data.length; i++){
-        postingData[i]=[];
-        if(data[i].name===data[i].user_name) 
+
     }
 
     
@@ -82,10 +84,12 @@ const server = http.createServer(app);
 const PORT = process.env.PORT;
 
 const start = async()=>{
+
     try{
         server.listen(PORT, ()=>{
             console.log("SERVER IS LISTENING ON "+PORT);
         })
+
     } catch(err){
         console.error(err);
     }
