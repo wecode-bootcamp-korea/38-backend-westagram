@@ -22,9 +22,12 @@ const server = http.createServer(app);
 
 const start = async () => {
     try {
-        server.listen()
-
+        server.listen(PORT, () => {
+            console.log(`server is listening on ${PORT}`)
+        })
     } catch (err) {
         console.error(err)
     }
 }
+
+start();

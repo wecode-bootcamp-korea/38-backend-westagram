@@ -1,5 +1,6 @@
 ### dbmate ###
 db/schema.sql
+
 ### dotenv ###
 .env
 
