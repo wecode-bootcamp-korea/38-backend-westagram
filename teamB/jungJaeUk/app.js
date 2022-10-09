@@ -36,12 +36,13 @@ app.get('/posts/list/all', async (req, res) => {
   await mysqlDataSource.query(
     `
     SELECT
-    users.id as userId,
-    users.profile_image as userProfileImage,
-    posts.id as postingId,
-    posts.profile_url as postingImageUrl,
-    posts.content as postingContent
-    FROM users INNER JOIN posts ON users.id = posts.user_id;
+      users.id as userId,
+      users.profile_image as userProfileImage,
+      posts.id as postingId,
+      posts.profile_url as postingImageUrl,
+      posts.content as postingContent
+    FROM users
+    INNER JOIN posts ON users.id = posts.user_id;
     `,
     (err, result) => {
       if(err) return console.log(err);
@@ -50,25 +51,27 @@ app.get('/posts/list/all', async (req, res) => {
   );
 });
 //[GET] posts list userid
-app.get('/posts/list/userid', async (req, res) => {
+app.get('/user/userid/posts', async (req, res) => {
   const { id } = req.body;
 
   await Promise.all([
     mysqlDataSource.query(
       `
       SELECT
-      posts.id as postingId,
-      posts.profile_url as postingImageUrl,
-      posts.content as postingContent
-      FROM posts WHERE user_id=${id};
+        posts.id as postingId,
+        posts.profile_url as postingImageUrl,
+        posts.content as postingContent
+      FROM posts
+      WHERE user_id=${id};
       `
     ),
     mysqlDataSource.query(
       `
       SELECT
-      users.id as userId,
-      users.profile_image as userProfileImage
-      FROM users WHERE id=${id};
+        users.id as userId,
+        users.profile_image as userProfileImage
+      FROM users
+      WHERE id=${id};
       `
     )
   ]).then(function([postingsResult, userResult]) {
@@ -84,28 +87,32 @@ app.post('/signup', async (req, res) => {
 
   await mysqlDataSource.query(
     `
-    INSERT INTO users (
+    INSERT INTO users
+      (
       name,
       email,
       profile_image,
       password
-    ) VALUES ( ?, ?, ?, ? );
+      )
+    VALUES ( ?, ?, ?, ? );
     `,
     [ name, email, profile_image, password ]
   );
   res.status(201).json({ "message" : "userCreated" });
 });
 //[POST] post add
-app.post('/posts/add', async (req, res) => {
+app.post('/posts', async (req, res) => {
   const { title, content, user_id } = req.body;
 
   await mysqlDataSource.query(
     `
-    INSERT INTO posts (
+    INSERT INTO posts
+      (
       title,
       content,
       user_id
-    ) VALUES ( ?, ?, ? );
+      )
+    VALUES ( ?, ?, ? );
     `,
     [ title, content, user_id ]
   );
@@ -127,13 +134,14 @@ app.post('/posts/update', async (req, res) => {
     mysqlDataSource.query(
       `
       SELECT
-      users.id as userId,
-      users.name as userName,
-      posts.id as postingId,
-      posts.title as postingTitle,
-      posts.content as postingContent
-      FROM users INNER JOIN posts
-      ON users.id = posts.user_id AND users.id=${user_id} AND posts.id=${post_id};
+        users.id as userId,
+        users.name as userName,
+        posts.id as postingId,
+        posts.title as postingTitle,
+        posts.content as postingContent
+      FROM users
+      INNER JOIN posts ON users.id = posts.user_id
+      AND users.id=${user_id} AND posts.id=${post_id};
       `
     )
   ]).then(function([updateResult, postResult]) {
@@ -148,7 +156,11 @@ app.post('/posts/like', async (req, res) => {
 
   await mysqlDataSource.query(
     `
-    INSERT INTO likes (user_id, post_id)
+    INSERT INTO likes
+      (
+      user_id,
+      post_id
+      )
     VALUES (${user_id}, ${post_id});
     `,
     (err, result) => {
@@ -163,7 +175,8 @@ app.delete('/posts/delete', async (req, res) => {
 
   await mysqlDataSource.query(
     `
-    DELETE FROM posts
+    DELETE
+    FROM posts
     WHERE id=${post_id};
     `,
     (err, result) => {
