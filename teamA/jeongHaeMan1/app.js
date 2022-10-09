@@ -29,9 +29,9 @@ app = express();
 
 app.use(express.json());
 app.use(cors());
-app.morgan(morgan(''));
+app.use(morgan(''));
 
-app.get("/ping", (req, rse) => {
+app.get("/ping", (req, res) => {
     res.json({message : "pong"})
 });
 
