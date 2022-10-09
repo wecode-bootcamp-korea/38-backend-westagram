@@ -47,10 +47,8 @@ appDataSource.initialize()
                         posts.url_image as postingImageUrl,
                         posts.user_id as userId,
                         users.profile_image as userProfileImage
-                        FROM (posts, users)
-                        WHERE users.id=posts.user_id;
-
-                `
+                    FROM (posts, users)
+                    WHERE users.id=posts.user_id;`
             )
         }
         catch(err){
@@ -69,8 +67,8 @@ appDataSource.initialize()
                         id,
                         content,
                         url_image
-                        FROM posts
-                        WHERE posts.user_id=${numberId}`
+                    FROM posts
+                    WHERE posts.user_id=${numberId}`
                         
             );
 
@@ -88,8 +86,8 @@ appDataSource.initialize()
             return await appDataSource.query(
                 `SELECT 
                         profile_image
-                        FROM users
-                        WHERE id=${numberId}`
+                    FROM users
+                    WHERE id=${numberId}`
             );
         }
         catch (err){
