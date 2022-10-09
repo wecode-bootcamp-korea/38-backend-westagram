@@ -10,6 +10,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 const {DataSource} = require("typeorm");
+const { json } = require("express");
 
 const weDataSource = new DataSource({
     type:process.env.TYPEORM_CONNECTION,
@@ -42,6 +43,14 @@ app.post("/user/signup", async(req, res)=>{
 
 });
 
+app.get("/posts", async(req, res)=>{
+    weDataSource.query(
+        `SELECT users.id AS userId, users.user_profile_image, posts.id AS postID, posts.post_profile_image, posts.content AS PostingContent FROM users, posts where users.name=posts.user_name;`
+        ,function(err, rows){
+        res.status(200).json({"data":rows});
+    });
+})
+
 app.post("/posts", async(req, res)=>{
     const {title, content, userName}=req.body;
     await weDataSource.query(
@@ -50,7 +59,8 @@ app.post("/posts", async(req, res)=>{
         );
      res.status(200).json({"message":"postCreated"});
 });
- 
+
+
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
