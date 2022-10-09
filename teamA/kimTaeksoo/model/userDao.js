@@ -25,11 +25,7 @@ const createUsers = async (name, email, profileImage, password) => {
             email,
             profile_image,
             password
-        ) VALUES (
-            ?,
-            ?,
-            ?,
-            ?
+        ) VALUES (?,?,?,?
         )`,
     [name, email, profileImage, password]
   );
