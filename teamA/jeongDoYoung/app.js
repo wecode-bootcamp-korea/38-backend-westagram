@@ -1,12 +1,16 @@
 
+//built-in package
 const http = require("http");
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
+//3rd-party package
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 const dotenv = require("dotenv").config();
+const { DataSource } = require("typeorm");
+//custom package
+const app = express();
 const routes = require("./routes");
 
-const app = express();
 
 app.use(cors());
 app.use(morgan('combined'));
