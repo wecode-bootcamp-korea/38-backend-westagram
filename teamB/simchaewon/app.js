@@ -10,8 +10,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 const {DataSource} = require("typeorm");
-const { json } = require("express");
-const { isArray } = require("util");
 
 const weDataSource = new DataSource({
     type:process.env.TYPEORM_CONNECTION,
