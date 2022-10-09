@@ -1,4 +1,5 @@
 const { DataSource } = require('typeorm');
+const util = require('util');
 
 const appDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
@@ -31,7 +32,7 @@ appDataSource.initialize()
             )
         }
         catch (err){
-            const error = new Error('invalid data input check your Dao');
+            const error = new Error('invalid data input');
             err.statusCode = 500;
             throw error;
         }
@@ -53,12 +54,53 @@ appDataSource.initialize()
             )
         }
         catch(err){
-            const error = new Error('invalid data search check your Dao!')
+            const error = new Error('invalid data search!')
             err.statusCode = 500;
             throw error;
         }
     }
 
+
+    const specificSearchPost = async (id) => {
+        try{
+            const numberId = Number(id);
+            return await appDataSource.query(
+                `SELECT 
+                        id,
+                        content,
+                        url_image
+                        FROM posts
+                        WHERE posts.user_id=${numberId}`
+                        
+            );
+
+        }
+        catch (err){
+            const error = new Error('invalid data search')
+            err.statusCode = 500;
+            throw error;
+        }
+    }
+
+    const specificSearchUserImgUrl = async (id) => {
+        try{
+            const numberId = Number(id);
+            return await appDataSource.query(
+                `SELECT 
+                        profile_image
+                        FROM users
+                        WHERE id=${numberId}`
+            );
+        }
+        catch (err){
+            const error = new Error('invalid data search');
+            err.statusCode = 500;
+            throw error;
+        }
+    }
+
+    
+
     module.exports = {
-        createPost,searchPost
+        createPost,searchPost,specificSearchPost,specificSearchUserImgUrl
     }
