@@ -20,12 +20,7 @@ const createUser = async (name, email, profileImage, password) => {
             email,
             profile_image,
             password
-        ) VALUES (
-            ?,
-            ?,
-            ?,
-            ?
-        )`,
+        ) VALUES (?,?,?,?)`,
     [name, email, profileImage, password]
   );
 };
@@ -50,8 +45,8 @@ const userIdMatchPosts = async () => {
         p.user_id as postingId,
         p.posting_image_url as postingImageUrl,
         p.content as postingContent
-        FROM posts as p
-        `
+    FROM posts as p
+    `
   );
   return data;
 };

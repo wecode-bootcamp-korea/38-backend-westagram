@@ -15,17 +15,13 @@ myDataSource.initialize().then(() => {
 
 const createPost = async (title, content, userId, postingImageUrl) => {
   await myDataSource.query(
-    `INSERT INTO posts (
+    `
+    INSERT INTO posts (
             title,
             content,
             user_id,
             posting_image_url
-        ) VALUES (
-            ?,
-            ?,
-            ?,
-            ?
-        )`,
+        ) VALUES (?,?,?,?)`,
     [title, content, userId, postingImageUrl]
   );
 };
@@ -38,8 +34,8 @@ const allPosts = async () => {
         p.id as postingId,
         p.posting_image_url as postingImageUrl,
         p.content as postingContent 
-        FROM users as u, posts as p
-        `
+    FROM users as u, posts as p
+    `
   );
   return data;
 };

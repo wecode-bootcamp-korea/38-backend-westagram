@@ -21,7 +21,7 @@ const userIdMatchPosts = async (req, res) => {
   const reqUserId = req.params;
 
   if (!reqUserId) {
-    return res.status(400).json({ message: "KET_ERROR" });
+    return res.status(400).json({ message: "KEY_ERROR" });
   }
 
   const data = await userService.userIdMatchPosts(reqUserId);
