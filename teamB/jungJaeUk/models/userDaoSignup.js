@@ -20,8 +20,7 @@ mysqlDataSource.initialize()
 
 const createUser = async ( name, email, profile_image, password ) => {
   try {
-    return await mysqlDataSource.query(
-      `
+    return await mysqlDataSource.query(`
       INSERT INTO users
       (
         name,
@@ -29,8 +28,7 @@ const createUser = async ( name, email, profile_image, password ) => {
         profile_image,
         password
       )
-      VALUES ( ?, ?, ?, ? );
-      `,
+      VALUES ( ?, ?, ?, ? );`,
       [ name, email, profile_image, password ]
     );
   } catch (err) {

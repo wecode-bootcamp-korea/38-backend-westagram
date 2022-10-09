@@ -20,7 +20,7 @@ mysqlDataSource.initialize()
 
 const postsListAll = async ( userId ) => {
   try {
-    await mysqlDataSource.query(
+    const posts = await mysqlDataSource.query(
       `
       SELECT
         posts.id as postingId,
@@ -30,7 +30,7 @@ const postsListAll = async ( userId ) => {
       WHERE user_id=${userId};
       `
     );
-    await mysqlDataSource.query(
+    const user = await mysqlDataSource.query(
       `
       SELECT
         users.id as userId,
@@ -39,6 +39,10 @@ const postsListAll = async ( userId ) => {
       WHERE id=${userId};
       `
     );
+
+    user[0]['postings'] = posts;
+
+    return user;
   } catch (err) {
     const error = new Error("INVALID_DATA_INPUT");
     error.statusCode = 500;
