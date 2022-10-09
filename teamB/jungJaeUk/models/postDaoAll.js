@@ -18,27 +18,18 @@ mysqlDataSource.initialize()
     mysqlDataSource.destroy();
   });
 
-const postsList = async ( userId ) => {
+const postsAll = async () => {
   try {
-    const posts = await mysqlDataSource.query(`
+    return await mysqlDataSource.query(`
       SELECT
+        users.id as userId,
+        users.profile_image as userProfileImage,
         posts.id as postingId,
         posts.profile_url as postingImageUrl,
         posts.content as postingContent
-      FROM posts
-      WHERE user_id=${userId};`
-    );
-    const user = await mysqlDataSource.query(`
-      SELECT
-        users.id as userId,
-        users.profile_image as userProfileImage
       FROM users
-      WHERE id=${userId};`
+      INNER JOIN posts ON users.id = posts.user_id;`
     );
-
-    user[0]['postings'] = posts;
-
-    return user;
   } catch (err) {
     const error = new Error("INVALID_DATA_INPUT");
     error.statusCode = 500;
@@ -46,4 +37,4 @@ const postsList = async ( userId ) => {
   }
 };
 
-module.exports = { postsList };
+module.exports = { postsAll };

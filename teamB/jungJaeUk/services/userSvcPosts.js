@@ -1,9 +1,9 @@
 const userDao = require("../models/userDaoPosts");
 
 const posts = async ( userId ) => {
-  const postsListAll = await userDao.postsListAll(userId);
+  const postsList = await userDao.postsList(userId);
 
-  return postsListAll;
+  return postsList;
 };
 
 module.exports = { posts };
