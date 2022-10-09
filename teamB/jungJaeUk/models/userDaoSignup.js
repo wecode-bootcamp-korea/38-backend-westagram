@@ -39,3 +39,5 @@ const createUser = async ( name, email, profile_image, password ) => {
     throw error;
   }
 };
+
+module.exports = { createUser };

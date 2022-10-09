@@ -1,6 +1,6 @@
 const userDao = require("../models/userDaoSignup");
 
-const posts = async ( name, email, profile_image, password ) => {
+const signUp = async ( name, email, profile_image, password ) => {
   const pwValidation = new RegExp(
     '^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})'
   );

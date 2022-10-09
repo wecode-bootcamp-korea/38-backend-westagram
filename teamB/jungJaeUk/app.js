@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(routes);
 
 app.get('/ping', async (req, res) => {
-  res.json({ "message" : "pong2" });
+  res.json({ "message" : "pong" });
 });
 
 const server = http.createServer(app);

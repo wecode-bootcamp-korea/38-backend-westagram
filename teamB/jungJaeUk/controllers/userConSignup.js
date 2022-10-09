@@ -1,4 +1,4 @@
-const userService = require("../sevices/userSvcSignup");
+const userService = require("../services/userSvcSignup");
 
 const signUp = async (req, res) => {
   try {
