@@ -52,8 +52,15 @@ const resultSpecific = async (a) => {
 }
 
 
+const update = async (userId, postId, title, content) => {
+    const updatePost = await postDao.updatePost(userId, postId, title, content);
+
+    return updatePost;
+}
+
+
 module.exports = {
-    posts,search,specificPostSearch,specificUserSearch,resultSpecific
+    posts,search,specificPostSearch,specificUserSearch,resultSpecific,update
 }
 
 

@@ -97,8 +97,36 @@ appDataSource.initialize()
         }
     }
 
-    
+    const updatePost = async ( userId, postId, title, content ) => {
+        try{
+             await appDataSource.query(
+                `Update posts 
+                    SET 
+                        user_id=?,
+                        title=?,
+                        content=?
+                    WHERE id=${postId}
+                        `,[userId,title,content]
+             );
+            return await appDataSource.query(
+                    `SELECT 
+                            user_id as userId,
+                            ( SELECT name FROM users WHERE id=${userId} ) as userName,
+                            id as postingId,
+                            title as postingTitle,
+                            content as postingContent
+                        FROM posts
+                        WHERE id=${userId}`
+            );
+            
+        }
+        catch(err) {
+            const error = new Error(err.message);
+            err.statusCode = 500;
+            throw error;
+        }
+    }
 
     module.exports = {
-        createPost,searchPost,specificSearchPost,specificSearchUserImgUrl
+        createPost,searchPost,specificSearchPost,specificSearchUserImgUrl,updatePost
     }
