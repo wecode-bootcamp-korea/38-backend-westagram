@@ -14,4 +14,9 @@ const allPosts = async () => {
   return await postDao.allPosts();
 };
 
-module.exports = { posting, allPosts };
+const ServicePatchPosting = async (userId, postingId, content) => {
+  const data = await postDao.daoPatchPosting(userId, postingId, content);
+  return data;
+};
+
+module.exports = { posting, allPosts, ServicePatchPosting };

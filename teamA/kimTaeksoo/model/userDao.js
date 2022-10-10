@@ -16,23 +16,22 @@ myDataSource.initialize().then(() => {
 const createUser = async (name, email, profileImage, password) => {
   await myDataSource.query(
     `INSERT INTO users (
-            name,
-            email,
-            profile_image,
-            password
-        ) VALUES (?,?,?,?)`,
+        name,
+        email,
+        profile_image,
+        password
+    ) VALUES (?,?,?,?)`,
     [name, email, profileImage, password]
   );
 };
 
 const getUser = async () => {
   const data = await myDataSource.query(
-    `
-    SELECT
-    u.id,
-    u.email,
-    u.profile_image,
-    u.password
+    `SELECT
+        u.id,
+        u.email,
+        u.profile_image,
+        u.password
     FROM users as u
     `
   );

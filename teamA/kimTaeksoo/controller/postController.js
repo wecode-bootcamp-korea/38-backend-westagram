@@ -27,4 +27,19 @@ const allPosts = async (req, res) => {
   }
 };
 
-module.exports = { posting, allPosts };
+const patchPosting = async (req, res) => {
+  try {
+    const { userId, postingId } = req.params;
+    const { content } = req.body;
+    const data = await postService.ServicePatchPosting(
+      userId,
+      postingId,
+      content
+    );
+    return res.status(200).json({ data });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+module.exports = { posting, allPosts, patchPosting };
