@@ -26,6 +26,7 @@ const app = express()
 app.use(express.json());
 app.use(morgan('tiny'));
 
+// health check
 app.get('/ping', cors(), function (req, res, next) {
     res.status(200).json({ message : 'pong '})
 });
@@ -109,6 +110,30 @@ app.post('/posts/post', async (req, res, next) => {
 
 });
 
+// 6. 게시글 수정하기
+app.patch('/posts/:userId/:postId/:postContent', async (req, res, next) => {
+    const userId = req.params.userId;
+    const postId = req.params.postId;
+    const postContent = req.params.postContent;
+
+
+    await myDataSource.query(
+        `UPDATE posts SET content='${postContent}' WHERE user_id=${userId} AND id=${postId};`
+    );
+
+    const data = await myDataSource.query(
+        `SELECT
+            u.id AS userId,
+            u.name AS userName,
+            p.id AS postingId,
+            p.title AS postingTitle,
+            p.content AS postingContent
+        FROM users u, posts p WHERE u.id=${userId} AND p.id=${postId};`
+    );
+
+    res.status(201).json({ "data" : data })
+
+});
 
 const server = http.createServer(app);
 const PORT = process.env.PORT;
