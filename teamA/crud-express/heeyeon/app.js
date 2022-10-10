@@ -1,4 +1,4 @@
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 
 const http = require('http');
 
@@ -30,6 +30,7 @@ app.get('/ping', cors(), function (req, res, next) {
     res.status(200).json({ message : 'pong '})
 });
 
+// 4. 전체 게시글 조회하기
 app.get('/posts/lists', async (req, res, next) => {
 
     await myDataSource.query(
@@ -45,7 +46,31 @@ app.get('/posts/lists', async (req, res, next) => {
     })
 });
 
+// 5. 유저의 게시글 조회하기
+app.get('/posts/:userId', async (req, res, next) => {
+    const userId = req.params.userId;
 
+    const user = await myDataSource.query(
+        `SELECT
+            id AS userId,
+            profile_image AS userProfileImage
+        FROM users WHERE id=${userId};`
+    );
+
+    const post = await myDataSource.query(
+        `SELECT
+            id AS postingId,
+            posting_img_url AS postingImageUrl,
+            content AS postingContent
+        FROM posts WHERE user_id=${userId};`
+    );
+
+    user[0]["postings"] = post;
+    res.status(201).json({ "data" : user })
+
+});
+
+// 2. 유저 회원가입 하기
 app.post('/users/signup', async (req, res, next) => {
     const {id, name, email, profile_image, password} = req.body
 
@@ -65,6 +90,7 @@ app.post('/users/signup', async (req, res, next) => {
 
 });
 
+// 3. 게시글 등록하기
 app.post('/posts/post', async (req, res, next) => {
     const {id, title, content, user_id} = req.body
 
