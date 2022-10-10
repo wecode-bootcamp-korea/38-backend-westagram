@@ -16,7 +16,13 @@ const viewAllPosts = async () => {
   return selectPost;
 };
 
+const viewUserId = async (userId) => {
+  const selectUserPost = await postDao.selectUserPost(userId);
+  return selectUserPost;
+}
+
 module.exports = {
   upload,
-  viewAllPosts
+  viewAllPosts,
+  viewUserId
 }

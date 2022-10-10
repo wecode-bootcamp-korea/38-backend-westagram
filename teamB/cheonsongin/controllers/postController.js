@@ -20,7 +20,6 @@ const upload = async (req, res) => {
 
 const viewAllPosts = async (req, res) => {
   try {
-
     const result = await postService.viewAllPosts();
     return res.status(200).json({"data" : result });
   } catch (err) {
@@ -28,7 +27,27 @@ const viewAllPosts = async (req, res) => {
     return res.status(err.statusCode || 500).json({ message: err.message});
   }
 };
+
+const viewUserId = async (req, res) => {
+  try {
+    const userId = req.params.userid;
+
+    const data = await postService.viewUserId(userId);
+
+    if ( !userId ) {
+      return res.status(400).json({ message: 'KEY_ERROR' });
+    }
+
+    return res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message});
+  }
+};
+
+
 module.exports = {
   upload,
-  viewAllPosts
+  viewAllPosts,
+  viewUserId
 }
