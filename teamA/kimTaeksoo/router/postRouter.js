@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post("/posting", postController.posting);
 router.get("/all", postController.allPosts);
-router.patch("/:postingId/users/:userId", postController.patchPosting);
+router.patch("/patch/:postingId/users/:userId", postController.patchPosting);
 router.delete("/delete/:postingId", postController.deletePosting);
+router.post("/likeposting/:postingId/user/:userId", postController.likePosting);
 
 module.exports = { router };

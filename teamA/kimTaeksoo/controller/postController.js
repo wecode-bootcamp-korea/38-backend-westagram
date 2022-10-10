@@ -51,4 +51,22 @@ const deletePosting = async (req, res) => {
   }
 };
 
-module.exports = { posting, allPosts, patchPosting, deletePosting };
+const likePosting = async (req, res) => {
+  try {
+    const { userId, postingId } = req.params;
+
+    await postService.likePosting(userId, postingId);
+
+    res.status(200).json({ message: "likeCreated" });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  posting,
+  allPosts,
+  patchPosting,
+  deletePosting,
+  likePosting,
+};

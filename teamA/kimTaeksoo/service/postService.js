@@ -23,4 +23,14 @@ const deletePosting = (postingId) => {
   return postDao.deletePosting(postingId);
 };
 
-module.exports = { posting, allPosts, ServicePatchPosting, deletePosting };
+const likePosting = (userId, postingId) => {
+  return postDao.likePosting(userId, postingId);
+};
+
+module.exports = {
+  posting,
+  allPosts,
+  ServicePatchPosting,
+  deletePosting,
+  likePosting,
+};

@@ -50,4 +50,17 @@ const deletePosting = async (postingId) => {
   await myDataSource.query(`DELETE FROM posts WHERE id=${postingId}`);
 };
 
-module.exports = { createPost, allPosts, daoPatchPosting, deletePosting };
+const likePosting = async (userId, postingId) => {
+  await myDataSource.query(
+    `INSERT INTO likes (user_id, post_id) VALUES (?, ?)`,
+    [userId, postingId]
+  );
+};
+
+module.exports = {
+  createPost,
+  allPosts,
+  daoPatchPosting,
+  deletePosting,
+  likePosting,
+};
