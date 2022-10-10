@@ -11,6 +11,12 @@ const upload = async (title, post_image, content, user_id) => {
   return createPost;
 };
 
+const viewAllPosts = async () => {
+  const selectPost = await postDao.selectPost();
+  return selectPost;
+};
+
 module.exports = {
-  upload
+  upload,
+  viewAllPosts
 }

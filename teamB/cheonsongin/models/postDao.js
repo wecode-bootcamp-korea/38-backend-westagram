@@ -37,6 +37,27 @@ const createPost = async ( title, post_image, content, user_id ) => {
   }
 };
 
+const selectPost = async () => {
+  try {
+    return await appDataSource.query(
+      `SELECT
+        u.id AS userId,
+        u.profile_image AS userProfileImage,
+        p.id AS postingId,
+        p.post_image AS postingImageUrl,
+        p.content AS postingContent
+      FROM users u
+      INNER JOIN posts p ON u.id = p.user_id;
+      `
+    );
+  } catch (err) {
+    const error = new Error('INVALID_DATA_INPUT');
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
 module.exports = {
-  createPost
+  createPost,
+  selectPost
 }
