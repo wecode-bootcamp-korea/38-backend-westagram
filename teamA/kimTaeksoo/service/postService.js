@@ -19,4 +19,8 @@ const ServicePatchPosting = async (userId, postingId, content) => {
   return data;
 };
 
-module.exports = { posting, allPosts, ServicePatchPosting };
+const deletePosting = (postingId) => {
+  return postDao.deletePosting(postingId);
+};
+
+module.exports = { posting, allPosts, ServicePatchPosting, deletePosting };

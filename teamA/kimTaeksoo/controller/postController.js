@@ -42,4 +42,14 @@ const patchPosting = async (req, res) => {
   }
 };
 
-module.exports = { posting, allPosts, patchPosting };
+const deletePosting = async (req, res) => {
+  try {
+    const { postingId } = req.params;
+    await postService.deletePosting(postingId);
+    return res.status(200).json({ message: "postingDeleted" });
+  } catch (error) {
+    return res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+module.exports = { posting, allPosts, patchPosting, deletePosting };

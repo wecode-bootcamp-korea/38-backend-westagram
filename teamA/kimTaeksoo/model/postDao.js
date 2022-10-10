@@ -59,4 +59,8 @@ const daoPatchPosting = async (userId, postingId, content) => {
   return data;
 };
 
-module.exports = { createPost, allPosts, daoPatchPosting };
+const deletePosting = async (postingId) => {
+  await myDataSource.query(`DELETE FROM posts WHERE id=${postingId}`);
+};
+
+module.exports = { createPost, allPosts, daoPatchPosting, deletePosting };
