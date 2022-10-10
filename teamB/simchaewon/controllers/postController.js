@@ -10,6 +10,9 @@ const upload = async (req, res) => {
     }
 
     await postService.upload(title, content, userName, postImage);
+    return res.status(201).json({
+      message: "POSTUPLOAD_SUCCESS",
+    });
   } 
   
   catch (err) {
@@ -17,6 +20,19 @@ const upload = async (req, res) => {
   }
 };
 
+const readall = async (req, res) => {
+  try{
+   const posts = await postService.readall();
+    return res.status(200).json({
+      "post" : posts
+    });
+  }
+  catch(err){
+    return res.status(err.statusCode || 500).json({message:err});
+  }
+}
+
 module.exports = {
-  upload
+  upload,
+  readall
 };

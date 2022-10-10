@@ -35,4 +35,18 @@ westa_DB.initialize()
         }
     };
 
-    module.exports={createPost};
+    const getPosts = async ()=>{
+        try{
+            return await westa_DB.query("SELECT * FROM posts");
+        }
+
+        catch(err){
+            const error = new Error ("INVALID_DATA_INPUT");
+            error.statusCode = 500;
+            throw error;
+        }
+    }
+
+
+
+    module.exports={createPost, getPosts};

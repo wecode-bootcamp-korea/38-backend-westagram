@@ -13,6 +13,12 @@ const upload=async(title, content, userName, postImage)=>{
     return createPost;
 };
 
+const readall = async ()=>{
+    return await postDao.getPosts();
+}
+
+
 module.exports = {
-    upload
+    upload,
+    readall
 };
