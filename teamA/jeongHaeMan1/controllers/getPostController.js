@@ -1,0 +1,16 @@
+const getPostService = require('../services/getPostService');
+
+const search = async (req, res, next) => {
+    try {
+        const search = await getPostService.search();
+
+        return res.status(201).json({ message : search });
+    } catch (err) {
+        console.log(err);
+        return res.status(err.statusCode || 500).json({ mesage : err.meassgae});
+    }
+};
+
+module.exports = {
+    search
+}
