@@ -2,9 +2,9 @@ const postService = require('../services/postService');
 
 const posts = async (req, res) => {
     try{
-        const { title, content, posting_image, user_id } = req.body;
+        const { title, content, url_image, user_id } = req.body;
 
-        await postService.posts( title, content, posting_image, user_id);
+        await postService.posts( title, content, url_image, user_id);
         return res.status(201).json({message: "posts created"});
     }
     catch (err){
@@ -56,6 +56,18 @@ const update = async ( req, res ) => {
     }
 }
 
+const deletes = async (req, res) => {
+    try{
+        const deleteId = req.params.id;
+        await postService.deletes(deleteId);
+
+        return res.status(200).json({message : "postDeleted"});
+    }
+    catch{
+
+    }
+}
+
 module.exports = {
-    posts,search,specificPostSearch,update
+    posts,search,specificPostSearch,update,deletes
 }

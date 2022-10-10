@@ -8,6 +8,7 @@ router.post('/posting', postController.posts);
 router.put('/update', postController.update);
 router.get('/search',postController.search);
 router.get('/:id' ,  postController.specificPostSearch);
+router.delete('/delete/:id',postController.deletes);
 
 module.exports = {
     router

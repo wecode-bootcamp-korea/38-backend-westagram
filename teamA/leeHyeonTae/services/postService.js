@@ -58,9 +58,14 @@ const update = async (userId, postId, title, content) => {
     return updatePost;
 }
 
+const deletes = async (deleteId) => {
+    const deletes = await postDao.deletePost(deleteId);
+
+    return deletes;
+}
 
 module.exports = {
-    posts,search,specificPostSearch,specificUserSearch,resultSpecific,update
+    posts,search,specificPostSearch,specificUserSearch,resultSpecific,update,deletes
 }
 
 

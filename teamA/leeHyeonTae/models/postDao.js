@@ -127,6 +127,14 @@ appDataSource.initialize()
         }
     }
 
+    const deletePost = async (deleteId) => {
+        await appDataSource.query(
+            `Delete
+                    FROM posts
+                WHERE user_id=${deleteId}`
+                )
+    };
+
     module.exports = {
-        createPost,searchPost,specificSearchPost,specificSearchUserImgUrl,updatePost
+        createPost,searchPost,specificSearchPost,specificSearchUserImgUrl,updatePost,deletePost
     }
