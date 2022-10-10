@@ -20,13 +20,13 @@ database.initialize()
 
 const createLike = async (userId, postId) => {
   try {
-    return await database.query(
-      `INSERT INTO likes(
+    return await database.query(`
+      INSERT INTO likes(
         user_id,
         post_id
-        ) VALUES (?, ?);`,
-        [ userId, postId ]
-      );
+      ) VALUES (?, ?);`,
+      [ userId, postId ]
+    );
   } catch (err) {
     const error = new Error('INVALID_DATA_INPUT');
     error.statusCode = 500;

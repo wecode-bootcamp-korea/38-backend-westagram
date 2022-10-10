@@ -20,14 +20,13 @@ database.initialize()
 
 const createPost = async (title, content, user_id, posting_image) => {
   try {
-    return await database.query(
-      `INSERT INTO posts(
+    return await database.query(`
+      INSERT INTO posts(
         title,
         content,
         user_id,
         posting_image
-      ) VALUES (?, ?, ?, ?);
-      `,
+      ) VALUES (?, ?, ?, ?);`,
       [ title, content, user_id, posting_image ]
     );
   } catch (err) {
@@ -39,8 +38,8 @@ const createPost = async (title, content, user_id, posting_image) => {
 
 const getPostsList = async () => {
   try {
-    const data = await database.query(
-      `SELECT
+    const data = await database.query(`
+      SELECT
         p.id AS postingId,
         p.user_id AS userId,
         p.posting_image AS postingImageUrl,
@@ -48,7 +47,7 @@ const getPostsList = async () => {
         p.content AS postingContent,
         u.profile_image AS userProfileImage
       FROM posts p
-      JOIN users u ON p.user_id=u.id`
+      JOIN users u ON p.user_id = u.id`
     );
     return data;
   } catch (err) {
@@ -60,22 +59,22 @@ const getPostsList = async () => {
 
 const getPostsListByUser = async (userId) => {
   try {
-    const user = await database.query(
-      `SELECT
+    const user = await database.query(`
+      SELECT
         u.id AS userId,
         u.profile_image AS userProfileImage
       FROM users u
-      WHERE id=${userId}`
+      WHERE id = ${userId}`
     );
   
-    const postings = await database.query(
-      `SELECT
+    const postings = await database.query(`
+      SELECT
         p.id AS postingId,
         p.posting_image AS postingImageUrl,
         p.content AS postingContent,
         p.title AS postingTitle
       FROM posts p
-      WHERE user_id=${userId}`
+      WHERE user_id = ${userId}`
     );
   
     user[0].postings = postings;
@@ -90,9 +89,9 @@ const getPostsListByUser = async (userId) => {
 
 const deletePost = async (postId) => {
   try {
-    return await database.query(
-        `DELETE FROM posts
-        WHERE posts.id=${postId}`
+    return await database.query(`
+      DELETE FROM posts
+      WHERE posts.id = ${postId}`
     );
   } catch (err) {
     const error = new Error('INVALID_DATA_INPUT');
