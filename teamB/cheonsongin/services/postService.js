@@ -21,8 +21,19 @@ const viewUserId = async (userId) => {
   return selectUserPost;
 }
 
+const postUpdate = async (content, id, user_id) => {
+  const updatePost = await postDao.updatePost(
+    content,
+    id,
+    user_id
+  );
+
+  return updatePost;
+}
+
 module.exports = {
   upload,
   viewAllPosts,
-  viewUserId
+  viewUserId,
+  postUpdate
 }
