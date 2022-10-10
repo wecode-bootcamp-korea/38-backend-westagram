@@ -6,6 +6,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const router = require("./router");
+const myDataSource = require("./util/datasource");
 
 const app = express();
 const server = http.createServer(app);
@@ -19,6 +20,10 @@ app.use(router);
 
 app.get("/ping", (req, res, next) => {
   res.json({ message: "success" });
+});
+
+myDataSource.initialize().then(() => {
+  console.log("data source has been init");
 });
 
 const start = () => {

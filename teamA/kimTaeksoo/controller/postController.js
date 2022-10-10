@@ -11,7 +11,6 @@ const posting = async (req, res) => {
     await postService.posting(title, content, userId, postingImageUrl);
     return res.status(201).json({ message: "postCreated" });
   } catch (error) {
-    console.log(error);
     return res.status(error.statusCode || 500).json({ message: error.message });
   }
 };

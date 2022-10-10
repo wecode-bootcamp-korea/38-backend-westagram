@@ -1,5 +1,4 @@
 const userDao = require("../model/userDao");
-const postDao = require("../model/postDao");
 
 const signUp = async (name, email, profileImage, password) => {
   const createUser = await userDao.createUser(
