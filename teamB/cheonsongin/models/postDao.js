@@ -113,9 +113,24 @@ const updatePost = async ( content, id, user_id ) => {
   }
 }; 
 
+
+const deletePost = async ( postId ) => {
+  try {
+    return await appDataSource.query(
+      `DELETE FROM posts
+      WHERE id = ${postId};`,
+      [ postId ]
+    );
+  } catch (err) {
+    const error = new Error('INVALID_DATA_INPUT');
+    throw error;
+  }
+};
+
 module.exports = {
   createPost,
   selectPost,
   selectUserPost,
-  updatePost
+  updatePost,
+  deletePost
 }
