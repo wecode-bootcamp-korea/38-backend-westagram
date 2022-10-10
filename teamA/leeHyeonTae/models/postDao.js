@@ -1,5 +1,4 @@
 const { DataSource } = require('typeorm');
-const util = require('util');
 
 const appDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
@@ -29,7 +28,7 @@ appDataSource.initialize()
                     user_id
                 ) VALUES ( ?,?,?,? )`
                 , [ title, content, url_image, user_id]
-            )
+            );
         }
         catch (err){
             const error = new Error('invalid data input');
