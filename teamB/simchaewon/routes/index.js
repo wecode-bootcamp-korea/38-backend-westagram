@@ -2,6 +2,9 @@ const express=require("express");
 const router=express.Router();
 
 const userRouter=require("./userRouter");
-router.use("/user",userRouter.router);
+const postRouter=require("./postRouter")
 
-module.exports={router};
+router.use("/user",userRouter.router);
+router.use("/post",postRouter.router);
+
+module.exports=router;

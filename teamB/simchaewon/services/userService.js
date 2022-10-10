@@ -8,8 +8,11 @@ const signUp = async (name, email, password, profileImage) => {
   if (!pwValidation.test(password)) {
     const err = new Error("PASSWORD_IS_NOT_VALID");
     err.statusCode = 409;
+    console.log("eeerrorr userservice", err)
     throw err;
+
   }
+ 
   const createUser = await userDao.createUser(
     name,
     email,

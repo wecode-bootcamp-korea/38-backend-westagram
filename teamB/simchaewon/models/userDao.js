@@ -1,6 +1,6 @@
 const { DataSource } = require('typeorm');
 
-const myDataSource = new DataSource({
+const westa_DB = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
     host: process.env.TYPEORM_HOST,
     port: process.env.TYPEORM_PORT,
@@ -9,27 +9,28 @@ const myDataSource = new DataSource({
     database: process.env.TYPEORM_DATABASE
 })
 
-myDataSource.initialize()
+westa_DB.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
   })
   .catch((err) => {
     console.error("Error occurred during Data Source initialization", err);
-	  myDataSource.destroy();
+	  westa_DB.destroy();
   });
+
 
 const createUser = async ( name, email, password, profileImage ) => {
 	try {
-		return await myDataSource.query(
-		`INSERT INTO users(
-		    name,
-		    email,
-		    password,
-		    profile_image,
-		) VALUES (?, ?, ?, ?);
-		`,
-		[ name, email, password, profileImage ]
-	  );
+		await westa_DB.query(
+			`INSERT INTO users(
+				name,
+				email,
+				password,
+				profile_image
+				) VALUES (?, ?, ?, ?);
+				`,
+				[ name, email, password, profileImage ]
+				);
 	} 
     
     catch (err) {
