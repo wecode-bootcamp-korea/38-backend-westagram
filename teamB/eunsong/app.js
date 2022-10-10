@@ -1,9 +1,8 @@
+require("dotenv").config();
 const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const dotenv = require("dotenv");
-dotenv.config()
 
 const { DataSource } = require('typeorm');
 const { title } = require("process");
@@ -40,14 +39,13 @@ app.get("/ping", (req, res) => {
 app.post("/users", async (req, res, next) => {
   const { name, email, profile_image, password } = req.body
 
-  await database.query(
-    `INSERT INTO users(
+  await database.query(`
+    INSERT INTO users(
       name,
       email,
       profile_image,
       password
-    ) VALUES (?, ?, ?, ?);
-    `,
+    ) VALUES (?, ?, ?, ?);`,
     [ name, email, profile_image, password ]
   );
   res.status(201).json({ message : "userCreated" });
@@ -57,14 +55,13 @@ app.post("/users", async (req, res, next) => {
 app.post("/posts", async (req, res, next) => {
   const { title, content, user_id, posting_image } = req.body
 
-  await database.query(
-    `INSERT INTO posts(
+  await database.query(`
+    INSERT INTO posts(
       title,
       content,
       user_id,
       posting_image
-    ) VALUES (?, ?, ?, ?);
-    `,
+    ) VALUES (?, ?, ?, ?);`,
     [ title, content, user_id, posting_image ]
   );
   res.status(201).json({ message : "postCreated" });
@@ -72,16 +69,16 @@ app.post("/posts", async (req, res, next) => {
 
 // Get all posts
 app.get("/posts", async (req, res) => {
-  await database.manager.query(
-    `SELECT
-            p.id AS postingId,
-            p.user_id AS userId,
-            p.posting_image AS postingImageUrl,
-            p.title AS postingTitle,
-            p.content AS postingContent,
-            u.profile_image AS userProfileImage
-        FROM posts p
-        JOIN users u ON p.user_id=u.id`
+  await database.manager.query(`
+    SELECT
+      p.id AS postingId,
+      p.user_id AS userId,
+      p.posting_image AS postingImageUrl,
+      p.title AS postingTitle,
+      p.content AS postingContent,
+      u.profile_image AS userProfileImage
+    FROM posts p
+    JOIN users u ON p.user_id = u.id`
     ,(err, rows) => {
       res.status(200).json(rows);
     }
@@ -92,21 +89,21 @@ app.get("/posts", async (req, res) => {
 app.get("/posts/:userId", async (req, res) => {
   const userId = req.params.userId;
   
-  const user = await database.manager.query(
-    `SELECT
-            u.id AS userId,
-            u.profile_image AS userProfileImage
-        FROM users u
-        WHERE id=${userId}`
+  const user = await database.query(`
+    SELECT
+      u.id AS userId,
+      u.profile_image AS userProfileImage
+    FROM users u
+    WHERE id = ${userId}`
   );
 
-  const postings = await database.manager.query(
-    `SELECT
-            p.id AS postingId,
-            p.posting_image AS postingImageUrl,
-            p.content AS postingContent
-        FROM posts p
-        WHERE user_id=${userId}`
+  const postings = await database.query(`
+    SELECT
+      p.id AS postingId,
+      p.posting_image AS postingImageUrl,
+      p.content AS postingContent
+    FROM posts p
+    WHERE user_id = ${userId}`
   );
 
   user[0].postings = postings;
@@ -121,25 +118,24 @@ app.patch("/posts/:userId/:postId", async (req, res) => {
 
   const { title, content } = req.body
 
-  await database.manager.query(
-    `UPDATE posts
-    SET
-      title=?,
-      content=?
-    WHERE user_id=${userId} AND id=${postId}`,
+  await database.manager.query(`
+    UPDATE posts
+    SET title = ?,
+      content = ?
+    WHERE user_id = ${userId} AND id = ${postId}`,
     [ title, content ]
   );
   
-  const result = await database.manager.query(
-    `SELECT
-            p.user_id AS userId,
-            u.name AS userName,
-            p.id AS postingId,
-            p.title AS postingTitle,
-            p.content AS postingContent
-        FROM posts p
-        JOIN users u ON p.user_id=u.id
-        WHERE p.user_id=${userId} AND p.id=${postId}`
+  const result = await database.manager.query(`
+    SELECT
+      p.user_id AS userId,
+      u.name AS userName,
+      p.id AS postingId,
+      p.title AS postingTitle,
+      p.content AS postingContent
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.user_id = ${userId} AND p.id = ${postId}`
   );
 
   return res.status(201).json(result);
@@ -149,9 +145,9 @@ app.patch("/posts/:userId/:postId", async (req, res) => {
 app.delete('/posts/:postId', async(req, res) => {
   const postId = req.params.postId;
 
-  await database.query(
-    `DELETE FROM posts
-    WHERE posts.id=${postId}`
+  await database.query(`
+    DELETE FROM posts
+    WHERE posts.id = ${postId}`
   );
 
   return res.status(200).json({ message : "postingDeleted" });
@@ -162,13 +158,13 @@ app.post("/likes/:userId/:postId", async (req, res) => {
   const userId = req.params.userId;
   const postId = req.params.postId;
 
-  await database.query(
-    `INSERT INTO likes(
+  await database.query(`
+    INSERT INTO likes(
       user_id,
       post_id
-      ) VALUES (?, ?);`,
-      [ userId, postId ]
-    );
+    ) VALUES (?, ?);`,
+    [ userId, postId ]
+  );
 
   return res.status(201).json({ message : "likeCreated" });
 })
