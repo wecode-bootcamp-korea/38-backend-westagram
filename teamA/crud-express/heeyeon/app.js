@@ -135,6 +135,18 @@ app.patch('/posts/:userId/:postId/:postContent', async (req, res, next) => {
 
 });
 
+// 7. 게시글 삭제하기
+app.delete('/posts/:postId', async (req, res, next) => {
+    const postId = req.params.postId;
+
+    await myDataSource.query(
+        `DELETE FROM posts WHERE id=${postId};`
+    );
+    
+    res.status(204).json({ "message" : "postingDeleted" })
+
+});
+
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
