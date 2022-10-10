@@ -37,9 +37,9 @@ CREATE TABLE `comments` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `likes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(3000) DEFAULT NULL,
   `user_id` int NOT NULL,
   `post_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `post_id` (`post_id`),
@@ -65,7 +65,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,5 +123,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20221006181725'),
   ('20221006181733'),
   ('20221006181738'),
-  ('20221007124919');
+  ('20221007124919'),
+  ('20221010111616'),
+  ('20221010112346');
 UNLOCK TABLES;

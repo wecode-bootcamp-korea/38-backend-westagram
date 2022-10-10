@@ -110,6 +110,24 @@ app.post('/posts/post', async (req, res, next) => {
 
 });
 
+
+// 8. 좋아요 누르기 (미완)
+app.post('/likes', async (req, res, next) => {
+    const {user_id, post_id} = req.body
+
+    await myDataSource.query(
+
+        `INSERT INTO likes(
+            user_id,
+            post_id,
+        ) VALUES (?, ?);`
+        [user_id, post_id]
+    );
+    
+    res.status(201).json({ "message" : likeCreated });
+
+})
+
 // 6. 게시글 수정하기
 app.patch('/posts/:userId/:postId/:postContent', async (req, res, next) => {
     const userId = req.params.userId;
