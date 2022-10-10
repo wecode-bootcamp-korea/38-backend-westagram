@@ -1,5 +1,4 @@
-const dotenv = require('dotenv');
-dotenv.config();
+const dotenv = require('dotenv').config();
 
 const http = require('http');
 
@@ -18,9 +17,9 @@ const myDataSource = new DataSource({
 })
 
 myDataSource.initialize()
-.then(() => {
-    console.log('Data Source has been initialized!')
-});
+    .then(() => {
+        console.log('Data Source has been initialized!')
+    });
 
 const app = express()
 
