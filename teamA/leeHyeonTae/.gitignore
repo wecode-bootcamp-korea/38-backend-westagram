@@ -1,5 +1,13 @@
-# Created by https://www.toptal.com/developers/gitignore/api/node,dotenv
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,dotenv
+# Created by https://www.toptal.com/developers/gitignore/api/node,dotenv,database
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,dotenv,database
+
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sqlite3
 
 ### dotenv ###
 .env
