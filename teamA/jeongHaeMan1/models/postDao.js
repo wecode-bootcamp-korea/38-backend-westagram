@@ -22,7 +22,7 @@ myDataSource.initialize()
 const createPost = async (title, content, user_id, image_url) => {
     try {
         return await myDataSource.query(
-        `INSERT INTO users(
+        `INSERT INTO posts(
             title, 
             content, 
             user_id, 
@@ -32,7 +32,7 @@ const createPost = async (title, content, user_id, image_url) => {
         [ title, content, user_id, image_url ]
         );
     } catch (err) {
-        const error = new Error('INVALID_DATA_INPUT');
+        const error = new Error(err.message);
         error.statusCode = 500;
         throw error;
     }

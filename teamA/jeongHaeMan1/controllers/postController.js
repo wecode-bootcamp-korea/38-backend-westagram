@@ -12,7 +12,7 @@ const write = async (req, res) => {
 
         await postService.write( title, content, user_id, image_url );
 
-        res.status(201).json({ message : 'WRITE_SUCCESS' });
+        res.status(201).json({ message : 'postCreated' });
     } catch (err) {
         console.log(err);
         return res.status(err.statusCode || 500).json({ mesage : err.meassgae});
