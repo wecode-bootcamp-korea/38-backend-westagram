@@ -15,20 +15,14 @@ myDataSource.initialize()
         console.log("Data Source has been initialized!");
     })
     .catch((err) => {
-        console.error("Error during Data Source initialization", err)
-        myDataSource.destroy()
+        console.error("Error during Data Source initialization", err);
+        myDataSource.destroy();
     })
 
 const createUser = async ( name, email, password, profileImage ) => {
     try {
         return await myDataSource.query(
-        `INSERT INTO users(
-            name,
-            email,
-            password,
-            profile_image
-        ) VALUES (?, ?, ?, ?);
-        `,
+       `INSERT INTO users (name,email,password,profile_image) VALUES (?,?,?,?);`,
         [ name, email, password, profileImage ]
         );
     } catch (err) {
