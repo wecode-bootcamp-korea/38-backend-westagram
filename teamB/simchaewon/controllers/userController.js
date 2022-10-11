@@ -1,7 +1,6 @@
 const userService = require("../services/userService");
 
 const signUp = async (req, res) => {
-
   try {
     const { name, email, password, profileImage } = req.body;
 
@@ -14,31 +13,27 @@ const signUp = async (req, res) => {
     return res.status(201).json({
       message: "SIGNUP_SUCCESS",
     });
-  } 
-  
-  catch (err) {
-      return res.status(err.statusCode || 500).json({ message: err.message });
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
+const readUserAllPosts = async (req, res) => {
+  try {
+    const { userName } = req.body;
 
-const readUserAllPosts = async (req, res) =>{
-  try{  const {userName} =req.body;
-
-    if(!userName) {
-      return res.status(400).json({message:"INPUT_ERROR"});
+    if (!userName) {
+      return res.status(400).json({ message: "INPUT_ERROR" });
     }
 
-    const userPosts=await userService.readUserAllPosts(userName);
+    const userPosts = await userService.readUserAllPosts(userName);
 
     return res.status(201).json({
-      datas:userPosts
+      datas: userPosts,
     });
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
-
-  catch(err){
-    return res.status( err.statusCode||500).json({message:err.message});
-  }
-}
+};
 
 module.exports = { signUp, readUserAllPosts };

@@ -24,11 +24,15 @@ const update = async(postId, contentChange)=>{
     return await updatedPost;
 }
 
+const deletePost=async(postId)=>{
+    await postDao.deletingPost(postId);
+}
 
 module.exports = {
     upload,
     readall,
-    update
+    update,
+    deletePost
 };
 
 

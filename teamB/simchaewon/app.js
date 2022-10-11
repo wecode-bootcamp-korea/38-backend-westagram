@@ -1,9 +1,9 @@
+require("dotenv").config();
 const http=require("http");
 const express=require("express");
 const cors=require("cors");
 const morgan=require("morgan");
 
-require("dotenv").config();
 const routes=require("./routes");
 const app = express();
 

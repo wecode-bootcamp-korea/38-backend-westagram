@@ -40,15 +40,30 @@ const update=async(req, res)=>{
       return res.status(400).json({ message: "KEY_ERROR" });
     }
     const changedData= await postService.update(postId, contentChange);
-    return await res.status(200). json({data:changedData});
+    return await res.status(200).json({data:changedData});
   } 
   catch (err) {
     return res.status(err.statusCode || 500).json({ message: err });
   }
 }
 
+const deletePost = async(req, res) =>{
+  try{
+    const {postId} =req.body;
+    if(!postId){
+      return res.status(400).json({message:"KEY_ERROR"});
+    }
+    await postService.deletePost(postId);
+    return await res.status(200).json({message:"postDeleted"});
+  } 
+  catch(err){
+    return res.status(err.statusCode||500).json({message:err});
+  }
+}
+
 module.exports = {
   upload,
   readall,
-  update
+  update,
+  deletePost
 };
