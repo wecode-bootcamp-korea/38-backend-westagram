@@ -19,17 +19,12 @@ myDataSource.initialize()
         myDataSource.destroy()
     })
 
-const deletePost = async () => {
+const deletePost = async (deleteId) => {
     try {
         return await myDataSource.query(
         `DELETE 
-            users.id as userId, 
-            users.profile_image as userProfileImage, 
-            posts.id as postingId,
-            posts.image_url as postingImageUrl,
-            posts.content as postingContent
-        FROM (users, posts)
-        WHERE users.id = posts.user_id;
+            FROM posts
+        WHERE id = ${deleteId};
         `)
     } catch (err) {
         const error = new Error(err.message);
@@ -39,5 +34,5 @@ const deletePost = async () => {
 };
 
 module.exports = {
-    createGetPost
+    deletePost
 }
