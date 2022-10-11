@@ -15,7 +15,7 @@ const write = async (req, res) => {
         res.status(201).json({ message : 'postCreated' });
     } catch (err) {
         console.log(err);
-        return res.status(err.statusCode || 500).json({ mesage : err.meassgae});
+        return res.status(err.statusCode || 500).json({ message : err.meassgae});
     }
 };
 
