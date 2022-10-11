@@ -5,7 +5,6 @@ const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const { DataSource } = require("typeorm");
 //custom package
 const app = express();
 const routes = require("./routes");
