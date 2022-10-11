@@ -32,7 +32,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 app.get("/ping", (req, rse) => {
-    res.json({message : "pong"})
+    res.json({ message : "pong" })
 });
 
 const PORT = process.env.PORT;
