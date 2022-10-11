@@ -1,4 +1,10 @@
-const userDao = require("../models/userDaoSignup");
+const userDao = require("../models/userDao");
+
+const posts = async ( userId ) => {
+  const postsList = await userDao.postsList(userId);
+
+  return postsList;
+};
 
 const signUp = async ( name, email, profile_image, password ) => {
   const pwValidation = new RegExp(
@@ -29,4 +35,7 @@ const signUp = async ( name, email, profile_image, password ) => {
   return createUser;
 };
 
-module.exports = { signUp };
+module.exports = { 
+  posts, 
+  signUp 
+};

@@ -212,5 +212,7 @@ tags
 [._]*.un~
 #DB schema file
 schema.sql
+#etc
+etc
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,linux,dotenv,vim

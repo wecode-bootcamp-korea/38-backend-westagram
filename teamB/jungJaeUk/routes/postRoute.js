@@ -1,15 +1,11 @@
 const router = require("express").Router();
 
-const postConAll = require("../controllers/postConAll");
-const postConDelete = require("../controllers/postConDelete");
-const postConLike = require("../controllers/postConLike");
-const postConUpdate = require("../controllers/postConUpdate");
-const postConAdd = require("../controllers/postConAdd");
+const postController = require("../controllers/postController");
 
-router.get("/all", postConAll.postsAll);
-router.delete("/delete", postConDelete.postsDelete);
-router.post("/like", postConLike.postsLike);
-router.patch("/update", postConUpdate.postsUpdate);
-router.post("/", postConAdd.postsAdd);
+router.get("/all", postController.postsAll);
+router.delete("/delete", postController.postsDelete);
+router.post("/like", postController.postsLike);
+router.patch("/update", postController.postsUpdate);
+router.post("/", postController.postsAdd);
 
 module.exports = { router };

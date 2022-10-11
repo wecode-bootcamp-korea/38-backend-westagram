@@ -18,6 +18,34 @@ mysqlDataSource.initialize()
     mysqlDataSource.destroy();
   });
 
+const postsList = async ( userId ) => {
+  try {
+    const posts = await mysqlDataSource.query(`
+      SELECT
+        posts.id as postingId,
+        posts.profile_url as postingImageUrl,
+        posts.content as postingContent
+      FROM posts
+      WHERE user_id=${userId};`
+    );
+    const user = await mysqlDataSource.query(`
+      SELECT
+        users.id as userId,
+        users.profile_image as userProfileImage
+      FROM users
+      WHERE id=${userId};`
+    );
+
+    user[0]['postings'] = posts;
+
+    return user;
+  } catch (err) {
+    const error = new Error("INVALID_DATA_INPUT");
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
 const createUser = async ( name, email, profile_image, password ) => {
   try {
     return await mysqlDataSource.query(`
@@ -52,4 +80,8 @@ const emailCheck = async ( email ) => {
   }
 };
 
-module.exports = { createUser, emailCheck };
+module.exports = { 
+  postsList,
+  createUser,
+  emailCheck 
+};
