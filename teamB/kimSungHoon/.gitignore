@@ -4,6 +4,7 @@
 ### schema ###
 schema.sql
 
+
 ### dotenv ###
 .env
 
@@ -194,4 +195,5 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/node,macos,dotenv,linux
+# End of https://www.toptal.com/developers/gitignore/api/macos,dotenv,node,linux
+
