@@ -10,7 +10,14 @@ const signUp = async ( name, email, profile_image, password ) => {
     throw err;
   };
   
-  await userDao.emailCheck( email );
+  const emailDupCheck = await userDao.emailCheck( email );
+  for(let i=0; i<emailDupCheck.length; i++) {
+    if(email === emailDupCheck[i].email) {
+      const err = new Error('DUPLICATE EMAIL');
+      err.statusCode = 400;
+      throw err;
+    }
+  }
   
   const createUser = await userDao.createUser(
     name,
