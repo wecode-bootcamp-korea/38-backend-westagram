@@ -27,13 +27,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
-//[GET] 통신 heath check code
+
 app.get('/ping', async (req, res) => {
   res.json({ "message" : "pong" });
 });
-//[GET] posts list all 
-app.get('/posts/list/all', async (req, res) => {
-  await mysqlDataSource.query(`
+
+app.get('/posts/list/all', (req, res) => {
+  mysqlDataSource.query(`
     SELECT
       users.id as userId,
       users.profile_image as userProfileImage,
@@ -48,7 +48,7 @@ app.get('/posts/list/all', async (req, res) => {
     }
   );
 });
-//[GET] posts list userid
+
 app.get('/user/userid/posts', async (req, res) => {
   const { id } = req.body;
 
@@ -75,7 +75,7 @@ app.get('/user/userid/posts', async (req, res) => {
     return console.log(err);
   });
 });
-//[POST] user sign up code
+
 app.post('/signup', async (req, res) => {
   const { name, email, profile_image, password } = req.body;
 
@@ -92,7 +92,7 @@ app.post('/signup', async (req, res) => {
   );
   res.status(201).json({ "message" : "userCreated" });
 });
-//[POST] post add
+
 app.post('/posts', async (req, res) => {
   const { title, content, user_id } = req.body;
 
@@ -109,7 +109,7 @@ app.post('/posts', async (req, res) => {
 
   res.status(201).json({ "message" : "postCreated" });
 });
-//[POST] post update 
+
 app.post('/posts/update', async (req, res) => {
   const { user_id, post_id, content } = req.body;
 
@@ -136,11 +136,11 @@ app.post('/posts/update', async (req, res) => {
     return console.log(err);
   });
 });
-//[POST] 입력 = 좋아요 눌림 당한 post id / 좋아요 누른 user id
-app.post('/posts/like', async (req, res) => {
+
+app.post('/posts/like', (req, res) => {
   const { post_id, user_id } = req.body;
 
-  await mysqlDataSource.query(`
+  mysqlDataSource.query(`
     INSERT INTO likes
       (
       user_id,
@@ -153,11 +153,11 @@ app.post('/posts/like', async (req, res) => {
     }
   );
 });
-//[DELETE] 삭제할 post id 입력 받아서, 해당 post delete
-app.delete('/posts/delete', async (req, res) => {
+
+app.delete('/posts/delete', (req, res) => {
   const { post_id } = req.body;
 
-  await mysqlDataSource.query(`
+  mysqlDataSource.query(`
     DELETE
     FROM posts
     WHERE id=${post_id};`,
