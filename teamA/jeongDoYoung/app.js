@@ -6,7 +6,6 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const { DataSource } = require("typeorm");
-const exp = require("constants");
 //custom package
 const app = express();
 const server = http.createServer(app);
