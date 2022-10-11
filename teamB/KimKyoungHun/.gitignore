@@ -1,12 +1,7 @@
-# Created by https://www.toptal.com/developers/gitignore/api/node,macos,dotenv,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,dotenv,linux
-
-### schema ###
-schema.sql
-
-
-### dotenv ###
 .env
+node_modules/
+# Created by https://www.toptal.com/developers/gitignore/api/node,linux,windows,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,linux,windows,macos
 
 ### Linux ###
 *~
@@ -132,6 +127,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -195,5 +191,30 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,dotenv,node,linux
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.toptal.com/developers/gitignore/api/node,linux,windows,macos
