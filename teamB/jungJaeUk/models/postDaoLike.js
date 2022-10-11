@@ -35,4 +35,19 @@ const likePost = async ( user_id, post_id ) => {
   }
 };
 
-module.exports = { likePost };
+const likeCheck = async () => {
+  try {
+    return await mysqlDataSource.query(`
+    SELECT 
+      likes.user_id,
+      likes.post_id
+    FROM likes;`
+    );
+  } catch (err) {
+    const error = new Error("INVALID_DATA_INPUT");
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
+module.exports = { likePost, likeCheck };

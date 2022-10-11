@@ -47,7 +47,7 @@ const emailCheck = async ( email ) => {
     );
   } catch (err) {
     const error = new Error("INVALID_DATA_INPUT");
-    error.statusCode = 400;
+    error.statusCode = 500;
     throw error;
   }
 };
