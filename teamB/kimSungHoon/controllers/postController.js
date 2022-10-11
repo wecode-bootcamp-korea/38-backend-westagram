@@ -28,7 +28,37 @@ const readingPost = async (req, res) => {
     }
 };
 
+const updatePost = async (req, res) => {
+    try {
+        const {content, id} = req.body;
+
+        if( !id || !content ){   
+            return res.status(400).json({message: '키 에러 발생'});
+        }
+        const data = await postService.updatePost(content, id);
+        return res.status(201).json(data)
+    }
+    catch(err){
+        console.log(err);
+        return res.status(err.statusCode || 500).json({message: err.message});
+    }
+}
+
+const deletePost = async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const result = await postService.deletePost(postId);
+        return res.status(201).json({ "message" : "postingDeleted" });
+    }
+    catch(err){
+        console.log(err);
+        return res.status(err.statusCode || 500).json({message: err.message});
+    }
+}
+
 module.exports = {
 	createPost,
-    readingPost
+    readingPost,
+    updatePost,
+    deletePost
 }

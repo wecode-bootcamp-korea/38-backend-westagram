@@ -7,16 +7,30 @@ const createPost = async (title, content, user_id) => {
         user_id
     );
     return createPost;
- };
+};
 
- const readingPost = async () => {
+const readingPost = async () => {
     const result = await postDao.readingPost();
     return result;
- };
+};
 
+const updatePost = async (content, id) => {
+    const result = await postDao.updatePost(
+        content,
+        id
+    );
+    return result;
+}
+
+const deletePost = async (postId) => {
+    const result = await postDao.deletePost(postId);
+    return result;
+}
 
 
 module.exports = {
     createPost,
-    readingPost
+    readingPost,
+    updatePost,
+    deletePost
 }

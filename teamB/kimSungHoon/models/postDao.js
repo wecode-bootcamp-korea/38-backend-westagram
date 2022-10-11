@@ -1,4 +1,5 @@
 const { DataSource } = require('typeorm');
+// const { deletePost } = require('../services/postService');
 
 const appDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
@@ -56,8 +57,51 @@ const readingPost = async (req, res) => {
 	}
 }
 
+const updatePost = async (content, id) => {
+    try {
+        await appDataSource.query(
+        `UPDATE posts
+            SET
+                content = ? 
+            WHERE id = ?
+      `, [content, id]
+      );
+        return await appDataSource.query(
+        `SELECT
+            users.id AS userId,
+            users.profile_image AS userProfileImage,
+            posts.id AS postingId,
+            posts.title AS postingTitle,
+            posts.content AS postingContent
+        FROM posts,users
+        WHERE users.id = posts.user_id AND posts.id = ${id}
+        `    
+        )
+    } catch(err){
+        const error = new Error('INVALID_DATA_INPUT');
+		error.statusCode = 500;
+		throw error;
+    }
+}
+
+const deletePost = async (postId) => {
+    try {
+        return await appDataSource.query(
+        `DELETE FROM posts
+        WHERE posts.id = ${postId}
+        `
+        );
+
+    } catch(err){
+        const error = new Error('INVALID_DATA_INPUT');
+		error.statusCode = 500;
+		throw error;
+    }
+}
 
 module.exports = {
     createPost,
-    readingPost
-  }
+    readingPost,
+    updatePost,
+    deletePost
+}

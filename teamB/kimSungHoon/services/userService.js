@@ -22,13 +22,21 @@ const signUp = async (name, email, password, profile_image) => {
     return createUser;
  };
 
- const userPosting = async (id) => {
+const userPosting = async (id) => {
     const result = await userDao.userPosting(id);
     return result;
  };
 
+const like = async (user_id, post_id) => {
+    const result = await userDao.like(
+        user_id, 
+        post_id
+    );
+    return result;
+}
 
 module.exports = {
     signUp,
-    userPosting
+    userPosting,
+    like
 }
