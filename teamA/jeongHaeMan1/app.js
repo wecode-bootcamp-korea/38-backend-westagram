@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(morgan(''));
+app.use(morgan('tiny'));
 app.use(routes);
 
 app.get("/ping", (req, res) => {
