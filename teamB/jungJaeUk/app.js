@@ -32,8 +32,8 @@ app.get('/ping', async (req, res) => {
   res.json({ "message" : "pong" });
 });
 
-app.get('/posts/list/all', (req, res) => {
-  mysqlDataSource.query(`
+app.get('/posts/list/all', async (req, res) => {
+  const result = await mysqlDataSource.query(`
     SELECT
       users.id as userId,
       users.profile_image as userProfileImage,
@@ -41,12 +41,10 @@ app.get('/posts/list/all', (req, res) => {
       posts.profile_url as postingImageUrl,
       posts.content as postingContent
     FROM users
-    INNER JOIN posts ON users.id = posts.user_id;`,
-    (err, result) => {
-      if(err) return console.log(err);
-      res.status(200).json({ "data" : result });
-    }
-  );
+    INNER JOIN posts ON users.id = posts.user_id;`
+    );
+
+  res.status(200).json({ "data" : result });
 });
 
 app.get('/user/userid/posts', async (req, res) => {
@@ -137,35 +135,29 @@ app.post('/posts/update', async (req, res) => {
   });
 });
 
-app.post('/posts/like', (req, res) => {
+app.post('/posts/like', async (req, res) => {
   const { post_id, user_id } = req.body;
 
-  mysqlDataSource.query(`
+  await mysqlDataSource.query(`
     INSERT INTO likes
       (
       user_id,
       post_id
       )
-    VALUES (${user_id}, ${post_id});`,
-    (err, result) => {
-      if(err) return console.log(err);
-      res.status(200).json({ "message" : "likeCreate" });
-    }
+    VALUES (${user_id}, ${post_id});`
   );
+  res.status(200).json({ "message" : "likeCreate" });
 });
 
-app.delete('/posts/delete', (req, res) => {
+app.delete('/posts/delete', async (req, res) => {
   const { post_id } = req.body;
 
-  mysqlDataSource.query(`
+  await mysqlDataSource.query(`
     DELETE
     FROM posts
-    WHERE id=${post_id};`,
-    (err, result) => {
-      if(err) return console.log(err);
-      res.status(200).json({ "data" : "postingDelete" });
-    }
+    WHERE id=${post_id};`
   );
+  res.status(200).json({ "data" : "postingDelete" });
 });
 
 const server = http.createServer(app);
