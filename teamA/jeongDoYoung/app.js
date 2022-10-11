@@ -1,12 +1,12 @@
 require("dotenv").config();
-//built-in package
+
 const http = require("http");
-//3rd-party package
+
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const { DataSource } = require("typeorm");
-//custom package
+
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT;
@@ -34,7 +34,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-  const {name,email,profile_image,password} = req.body
+  const { name, email, profile_image, password } = req.body
   await myDataSource.query(`
     INSERT INTO users (
       name,
