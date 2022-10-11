@@ -27,6 +27,28 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+//[GET] 통신 heath check code
+app.get('/ping', async (req, res) => {
+  res.json({ "message" : "pong" });
+});
+
+//[POST] user sign up code
+app.post('/signup', async (req, res) => {
+  const { name, email, profile_image, password } = req.body;
+
+  await myDataSource.query(
+    `
+    INSERT INTO users (
+      name,
+      email,
+      profile_image,
+      password
+    ) VALUES ( ?, ?, ?, ? );
+    `,
+    [ name, email, profile_image, password ]
+  );
+  res.status(201).json({ "message" : "userCreated" });
+});
 
 const server = http.createServer(app);
 const PORT = process.env.PORT;

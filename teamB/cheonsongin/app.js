@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
 
-
+// health check
 app.get('/ping', (req, res) => {
   res.json({ message : 'pong' });
 });
@@ -134,6 +134,24 @@ app.post('/likes', async(req, res) => {
     [ user_id, post_id ]
   );
   res.status(201).json({ message : 'likeCreated' });
+});
+
+// create sign-up
+app.post('/users', async (req, res, next) => {
+  const { name, email, profile_image, password } = req.body
+
+  await appDataSource.query(
+    `INSERT INTO users(
+      name,
+      email,
+      profile_image,
+      password
+    ) VALUES (?, ?, ?, ?);
+    `,
+    [ name, email, profile_image, password ]
+  );
+
+  res.status(201).json({ message : 'userCreated' });
 });
 
 const server = http.createServer(app);
