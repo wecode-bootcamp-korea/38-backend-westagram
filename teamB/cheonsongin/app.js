@@ -33,7 +33,6 @@ app.get('/ping', (req, res) => {
   res.json({ message : 'pong' });
 });
 
-// 게시물 등록
 app.post('/posts/upload', async (req, res, next) => {
   const { title, post_image, content, user_id  } = req.body;
   
@@ -51,7 +50,6 @@ app.post('/posts/upload', async (req, res, next) => {
   res.status(201).json({ message : 'postCreated' });
 });
 
-// 전체 게시물 조회
 app.get('/posts/get', async (req, res) => {  
   await appDataSource.query(
     `SELECT
@@ -67,7 +65,6 @@ app.get('/posts/get', async (req, res) => {
   );
 });
 
-// user 게시물 조회
 app.get('/posts/:userId', async (req, res) => {
   const userId = req.params.userId;
   const users = await appDataSource.query(
@@ -89,7 +86,6 @@ app.get('/posts/:userId', async (req, res) => {
   res.status(200).json({ data : users });
 });
 
-// post update
 app.put('/posts/:userId', async (req, res) => {
   const userId = req.params.userId;
   const { content } = req.body;
@@ -117,7 +113,6 @@ app.put('/posts/:userId', async (req, res) => {
     });
 });
 
-// post delete
 app.delete('/posts/:postId', async(req, res) => {
 	const { postId } = req.params;
 
@@ -128,7 +123,6 @@ app.delete('/posts/:postId', async(req, res) => {
   res.status(204).json({ message : "postingDeleted" });
 });
 
-// likes
 app.post('/likes', async(req, res) => {
   const { user_id, post_id } = req.body;
 
