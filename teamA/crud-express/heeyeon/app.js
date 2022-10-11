@@ -176,8 +176,4 @@ const start = async () => {
     }
 };
 
-// const start = async() => {
-//     server.listen(PORT, () => console.log(`server is listening on ${PORT}`))
-// }
-
 start()
