@@ -21,12 +21,11 @@ myDataSource
 const createUsers = async (name, email, profileImage, password) => {
   await myDataSource.query(
     `INSERT INTO users (
-            name,
-            email,
-            profile_image,
-            password
-        ) VALUES (?,?,?,?
-        )`,
+          name,
+          mail,
+          profile_image,
+          password
+    ) VALUES (?,?,?,?)`,
     [name, email, profileImage, password]
   );
 };
