@@ -1,10 +1,10 @@
-const likeService = require('../services/likeService');
+const insertLikePosting = require('../services/likeService');
 
 const like = async (req,res) => {
     try{
         const { user_id, post_id } = req.body;
 
-        await likeService.like( user_id, post_id );
+        await insertLikePosting.like( user_id, post_id );
         
         return await res.status(200).json({message: "likeCreated"});
     }

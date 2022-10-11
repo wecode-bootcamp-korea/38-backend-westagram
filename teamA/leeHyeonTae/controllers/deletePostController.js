@@ -1,9 +1,9 @@
-const deletePostService = require('../services/deletePostService');
+const deletePostingBtId = require('../services/deletePostService');
 
 const deletes = async (req, res) => {
     try{
         const deleteId = Number(req.params.id);
-        await deletePostService.deletes(deleteId);
+        await deletePostingBtId.deletes(deleteId);
 
         return res.status(200).json({message : "postDeleted"});
     }

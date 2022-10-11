@@ -1,4 +1,3 @@
-// 환경변수 필요한 dotenv 최상위로 올리는게 좋다(cuz: 가독성)
 require('dotenv').config();
 const express = require('express');
 const routes = require('./routes');

@@ -10,8 +10,6 @@ const update = async ( req, res ) => {
         
         const resultUpdate = await updatePostService.update(Number(userId), Number(postId), title, content);
 
-
-        // console.log(resultUpdate);
         return res.status(200).json({data: resultUpdate});
     }
     catch (err){
