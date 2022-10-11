@@ -1,26 +1,8 @@
-const { DataSource } = require('typeorm');
-
-const database = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE
-})
-
-database.initialize()
-  .then(() => {
-    console.log("Data Source in postDao has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error occurred during Data Source initialization", err);
-    database.destroy();
-  });
+const DaoModule = require("./DaoModule");
 
 const createPost = async (title, content, user_id, posting_image) => {
   try {
-    return await database.query(`
+    return await DaoModule.database.query(`
       INSERT INTO posts(
         title,
         content,
@@ -38,7 +20,7 @@ const createPost = async (title, content, user_id, posting_image) => {
 
 const getPostsList = async () => {
   try {
-    const data = await database.query(`
+    const data = await DaoModule.database.query(`
       SELECT
         p.id AS postingId,
         p.user_id AS userId,
@@ -59,7 +41,7 @@ const getPostsList = async () => {
 
 const getPostsListByUser = async (userId) => {
   try {
-    const user = await database.query(`
+    const user = await DaoModule.database.query(`
       SELECT
         u.id AS userId,
         u.profile_image AS userProfileImage
@@ -67,7 +49,7 @@ const getPostsListByUser = async (userId) => {
       WHERE id = ${userId}`
     );
   
-    const postings = await database.query(`
+    const postings = await DaoModule.database.query(`
       SELECT
         p.id AS postingId,
         p.posting_image AS postingImageUrl,
@@ -89,7 +71,7 @@ const getPostsListByUser = async (userId) => {
 
 const deletePost = async (postId) => {
   try {
-    return await database.query(`
+    return await DaoModule.database.query(`
       DELETE FROM posts
       WHERE posts.id = ${postId}`
     );
