@@ -5,7 +5,6 @@ const deletePost = async(deleteId) => {
         await deletePostDao.deletePost(deleteId);
     } catch (err) {
         console.error(err);
-        //return deleteId.status(err.statusCode || 500).json({message : err.message})
     }
 }
 
