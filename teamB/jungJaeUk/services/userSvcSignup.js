@@ -9,6 +9,9 @@ const signUp = async ( name, email, profile_image, password ) => {
     err.statusCode = 400;
     throw err;
   };
+  
+  await userDao.emailCheck( email );
+  
   const createUser = await userDao.createUser(
     name,
     email,

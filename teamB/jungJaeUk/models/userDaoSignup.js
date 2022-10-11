@@ -38,4 +38,23 @@ const createUser = async ( name, email, profile_image, password ) => {
   }
 };
 
-module.exports = { createUser };
+const emailCheck = async ( email ) => {
+  try {
+    const emailArr = await mysqlDataSource.query(`
+      SELECT 
+        email
+      FROM users;`
+    );
+    for(let i=0; i<emailArr.length; i++) {
+      if(email === emailArr[i].email) {
+        throw new Error();
+      }
+    }
+  } catch (err) {
+    const error = new Error("DUPLICATE EMAIL");
+    error.statusCode = 400;
+    throw error;
+  }
+};
+
+module.exports = { createUser, emailCheck };

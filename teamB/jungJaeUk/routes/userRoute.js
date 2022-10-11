@@ -1,9 +1,9 @@
 const router = require("express").Router();
 
-const userConPosts = require("../controllers/userConPosts");
 const userConSignup = require("../controllers/userConSignup");
+const userConPosts = require("../controllers/userConPosts");
 
-router.get("/:id/posts", userConPosts.posts);
 router.post("/signup", userConSignup.signUp);
+router.get("/:id/posts", userConPosts.posts);
 
 module.exports = { router };
