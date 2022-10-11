@@ -47,6 +47,35 @@ westa_DB.initialize()
         }
     }
 
+    const updatePost=async(postId, contentChange)=>{
+        try{
+            await westa_DB.query("UPDATE posts SET content=? WHERE id=?",
+            [contentChange, postId]
+            );
+            return await westa_DB.query(
+                "SELECT users.id AS userId, users.name as userName, posts.id as postingId, posts.title as postingTitle, posts.content AS postingContent from users,posts where users.id=posts.user_id AND posts.id=?",
+                [postId]
+                )
+            
+        }
+
+//         {
+//             "data" : {
+//                 "userId"           : 1,
+//                 "userName"         : "weCode",
+//                     "postingId"        : 1,
+//                     "postingTitle"     : "간단한 HTTP API 개발 시작!",
+//                 "postingContent"   : "기존과 다르게 수정한 내용입니다."
+//             }
+//         }
+// Zz        
+
+        catch(err){
+            const error = new Error ("INVALID_DATA_INPUT");
+            error.statusCode = 500;
+            throw error;
+        }
+    };
 
 
-    module.exports={createPost, getPosts};
+    module.exports={createPost, getPosts, updatePost};

@@ -1,3 +1,4 @@
+const { json } = require("express");
 const postService = require("../services/postService");
 
 const upload = async (req, res) => {
@@ -24,7 +25,7 @@ const readall = async (req, res) => {
   try{
    const posts = await postService.readall();
     return res.status(200).json({
-      "post" : posts
+      data : posts
     });
   }
   catch(err){
@@ -32,7 +33,22 @@ const readall = async (req, res) => {
   }
 }
 
+const update=async(req, res)=>{
+  try {
+    const { postId, contentChange } = req.body;
+    if(!postId || !contentChange) {
+      return res.status(400).json({ message: "KEY_ERROR" });
+    }
+    const changedData= await postService.update(postId, contentChange);
+    return await res.status(200). json({data:changedData});
+  } 
+  catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err });
+  }
+}
+
 module.exports = {
   upload,
-  readall
+  readall,
+  update
 };

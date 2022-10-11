@@ -23,6 +23,12 @@ const signUp = async (name, email, password, profileImage) => {
   return createUser;
 };
 
+
+const readUserAllPosts =async(userName)=>{
+  const getUserPosts = await userDao.getUserPosts(userName);
+  return getUserPosts;
+}
+
 module.exports = {
-  signUp
+  signUp,readUserAllPosts
 };

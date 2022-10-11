@@ -16,11 +16,29 @@ const signUp = async (req, res) => {
     });
   } 
   
-    catch (err) {
-    console.log(err, "IDONTKNOW");
-
-    return res.status(err.statusCode || 500).json({ message: err.message });
+  catch (err) {
+      return res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
-module.exports = { signUp };
+
+const readUserAllPosts = async (req, res) =>{
+  try{  const {userName} =req.body;
+
+    if(!userName) {
+      return res.status(400).json({message:"INPUT_ERROR"});
+    }
+
+    const userPosts=await userService.readUserAllPosts(userName);
+
+    return res.status(201).json({
+      datas:userPosts
+    });
+  }
+
+  catch(err){
+    return res.status( err.statusCode||500).json({message:err.message});
+  }
+}
+
+module.exports = { signUp, readUserAllPosts };
