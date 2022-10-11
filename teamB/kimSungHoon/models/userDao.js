@@ -55,7 +55,9 @@ const userPosting = async (id) => {
         FROM posts
         WHERE user_id=${id}`   
         );  
-
+        console.log(users);
+       
+        
         users[0]['postings'] = posts;
         return users;
 
