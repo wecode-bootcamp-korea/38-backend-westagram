@@ -4,6 +4,7 @@ CREATE TABLE posts (
     title VARCHAR(100) NOT NULL,
     content VARCHAR(3000) NULL,
     user_id INT NOT NULL,
+    profile_url VARCHAR(1000) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id)
@@ -11,3 +12,4 @@ CREATE TABLE posts (
 
 -- migrate:down
 DROP TABLE posts;
+

@@ -9,14 +9,6 @@ const myDataSource = new DataSource({
     database: process.env.TYPEORM_DATABASE
 })
 
-myDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error occurred during Data Source initialization", err);
-	  myDataSource.destroy();
-  });
 
 const createPost = async (user_id,title,content ) => {
 	try {
