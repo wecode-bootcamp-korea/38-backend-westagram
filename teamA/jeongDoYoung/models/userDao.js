@@ -18,7 +18,7 @@ myDataSource.initialize()
 	  myDataSource.destroy();
   });
 
-const createUser = async ( name, email, password, profileImage ) => {
+const createUser = async ( name, email, password, profile_image ) => {
 	try {
 		return await myDataSource.query(
 		`INSERT INTO users(
@@ -28,7 +28,7 @@ const createUser = async ( name, email, password, profileImage ) => {
 		    profile_image
 		) VALUES (?, ?, ?, ?);
 		`,
-		[ name, email, password, profileImage ]
+		[ name, email, password, profile_image ]
 	  );
 	} catch (err) {
 		const error = new Error(err.message);

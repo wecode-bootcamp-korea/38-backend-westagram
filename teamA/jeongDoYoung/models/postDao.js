@@ -9,23 +9,20 @@ const myDataSource = new DataSource({
     database: process.env.TYPEORM_DATABASE
 })
 
+myDataSource.initialize()
 
 const createPost = async (user_id,title,content ) => {
-	try {
+	//try {
+		console.log(content)
 		return await myDataSource.query(
-		`INSERT INTO posts(
-		    user_id,
-            title,
-            content
-		) VALUES (?, ?, ?);
-		`,
-		[ user_id,title,content ]
-	  );
-	} catch (err) {
-		const error = new Error(err.message);
-		error.statusCode = 500;
-		throw error;
-	}
+		`INSERT INTO posts (user_id, title, content) VALUES (?, ? , ?)`,
+		[user_id, title, content]
+		);
+	// } catch (err) {
+	// 	const error = new Error(err.message);
+	// 	error.statusCode = 500;
+	// 	throw error;
+	// }
 };
 
 module.exports = {
