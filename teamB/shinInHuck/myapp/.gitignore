@@ -1,5 +1,6 @@
 .env
 .node_modules
+db/schema.sql
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,vim,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,vim,linux
