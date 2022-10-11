@@ -9,7 +9,14 @@ const createPost = async (title, content, user_id) => {
     return createPost;
  };
 
+ const readingPost = async () => {
+    const result = await postDao.readingPost();
+    return result;
+ };
+
+
 
 module.exports = {
-    createPost
+    createPost,
+    readingPost
 }

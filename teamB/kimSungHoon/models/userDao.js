@@ -37,6 +37,36 @@ const createUser = async ( name, email, profile_image, password ) => {
     }
 };
 
+const userPosting = async (id) => {
+    try {
+        const users = await appDataSource.query(
+        `SELECT 
+            users.id AS userId,
+            users.profile_image AS userProfileImage
+        FROM users
+        WHERE id=${id}`
+        );
+
+        const posts = await appDataSource.query(
+        `SELECT
+            posts.id AS postingId,
+            posts.title AS postingTitle,
+            posts.content AS postingContent
+        FROM posts
+        WHERE user_id=${id}`   
+        );  
+
+        users[0]['postings'] = posts;
+        return users;
+
+    } catch (err) {
+		const error = new Error('INVALID_DATA_INPUT');
+		error.statusCode = 500;
+		throw error;
+	}
+}
+
 module.exports = {
-    createUser
+    createUser,
+    userPosting
   }

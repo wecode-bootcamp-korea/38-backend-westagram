@@ -7,7 +7,4 @@ router.use('/users', userRouter.router);
 const postRouter = require('./postRouter');
 router.use('/posts', postRouter.router);
 
-const postAllRouter = require('./postAllRouter');
-router.use('/postsAll', postAllRouter.router);
-
 module.exports = router;

@@ -22,7 +22,13 @@ const signUp = async (name, email, password, profile_image) => {
     return createUser;
  };
 
+ const userPosting = async (id) => {
+    const result = await userDao.userPosting(id);
+    return result;
+ };
+
 
 module.exports = {
-    signUp
+    signUp,
+    userPosting
 }
