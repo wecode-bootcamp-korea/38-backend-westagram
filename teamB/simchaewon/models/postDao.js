@@ -26,10 +26,11 @@ const createPost = async (title, content, userName, postImage) => {
       `SELECT id FROM users WHERE users.name=? ;`,
       [userName]
     );
-    await westa_DB.query(
+    return await westa_DB.query(
       `INSERT INTO posts (title, content, user_id, post_image) VALUES (?,?,?,?)`,
       [title, content, id[0].id, postImage]
     );
+
   } catch (err) {
     const error = new Error("INVALID_DATA_INPUT");
     error.statusCode = 500;
