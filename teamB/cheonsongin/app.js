@@ -133,14 +133,10 @@ app.post('/likes', async(req, res) => {
   const { user_id, post_id } = req.body;
 
   await appDataSource.query(
-    `INSERT INTO likes
-    (
+    `INSERT INTO likes(
       user_id,
       post_id
-    )
-    VALUES
-    (?, ?);
-    `,
+      ) VALUES (?, ?);`,
     [ user_id, post_id ]
   );
   res.status(201).json({ message : 'likeCreated' });
