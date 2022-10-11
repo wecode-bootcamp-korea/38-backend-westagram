@@ -9,7 +9,6 @@ const signUp = async (req, res) => {
         }
 
         await userService.signUp( name, email, profile_image, password);
-
         return res.status(201).json({ message: 'User Created '});
     }
     catch (err) {
