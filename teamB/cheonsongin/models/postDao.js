@@ -1,23 +1,3 @@
-const { DataSource } = require('typeorm');
-
-const appDataSource = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE
-});
-
-appDataSource.initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
-    console.error('Error occurred during Data Source initialization', err);
-    appDataSource.destroy();
-  });
-
 const createPost = async ( title, post_image, content, user_id ) => {
   try {
     return await appDataSource.query(
@@ -57,32 +37,6 @@ const selectPost = async () => {
   }
 };
 
-const selectUserPost = async (userId) => {
-  try {
-    const users = await appDataSource.query(
-      `SELECT
-        u.id AS userId,
-        u.profile_image AS userProfileImage
-      FROM users u
-      WHERE id=${userId}`
-    );
-    const postsings = await appDataSource.query(
-      `SELECT
-        p.id AS postingId,
-        p.post_image AS postingImageUrl,
-        p.content AS postingContent
-      FROM posts p
-      WHERE user_id=${userId}`
-    );
-    users[0].posting = postsings;
-    return users;
-  } catch (err) {
-    const error = new Error('INVALID_DATA_INPUT');
-    error.statusCode = 500;
-    throw error;
-  }
-};
-
 const updatePost = async ( content, id, user_id ) => {
   try {
     await appDataSource.query(
@@ -113,7 +67,6 @@ const updatePost = async ( content, id, user_id ) => {
   }
 }; 
 
-
 const deletePost = async ( postId ) => {
   try {
     return await appDataSource.query(
@@ -130,7 +83,6 @@ const deletePost = async ( postId ) => {
 module.exports = {
   createPost,
   selectPost,
-  selectUserPost,
   updatePost,
   deletePost
 }

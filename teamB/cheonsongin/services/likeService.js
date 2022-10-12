@@ -1,10 +1,10 @@
 const likeDao = require('../models/likeDao');
 
-const likePost = async (user_id, post_id) => {
+const likePost = async (userId, postId) => {
 
   const postLike = await likeDao.postLike(
-    user_id,
-    post_id
+    userId,
+    postId
   );
 
   return postLike;

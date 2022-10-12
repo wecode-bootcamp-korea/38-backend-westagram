@@ -18,6 +18,24 @@ const signUp = async (req, res) => {
   }
 };
 
+const viewUserId = async (req, res) => {
+  try {
+    const userId = req.params.userid;
+
+    const data = await userService.viewUserId(userId);
+
+    if ( !userId ) {
+      return res.status(400).json({ message: 'KEY_ERROR' });
+    }
+
+    return res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message});
+  }
+};
+
 module.exports = {
-  signUp
+  signUp,
+  viewUserId
 }

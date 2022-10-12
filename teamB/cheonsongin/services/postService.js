@@ -1,7 +1,6 @@
 const postDao = require('../models/postDao');
-const { post } = require('../routes');
 
-const upload = async (title, post_image, content, user_id) => {
+const registration = async (title, post_image, content, user_id) => {
   const createPost = await postDao.createPost(
     title,
     post_image,
@@ -17,12 +16,7 @@ const viewAllPosts = async () => {
   return selectPost;
 };
 
-const viewUserId = async (userId) => {
-  const selectUserPost = await postDao.selectUserPost(userId);
-  return selectUserPost;
-}
-
-const postUpdate = async (content, id, user_id) => {
+const modification = async (content, id, user_id) => {
   const updatePost = await postDao.updatePost(
     content,
     id,
@@ -32,7 +26,7 @@ const postUpdate = async (content, id, user_id) => {
   return updatePost;
 }
 
-const postDelete = async (postId) => {
+const deletion = async (postId) => {
   const deletePost = await postDao.deletePost(
     postId
   );
@@ -41,9 +35,8 @@ const postDelete = async (postId) => {
 }
 
 module.exports = {
-  upload,
+  registration,
   viewAllPosts,
-  viewUserId,
-  postUpdate,
-  postDelete
+  modification,
+  deletion
 }

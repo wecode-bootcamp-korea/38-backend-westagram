@@ -1,13 +1,12 @@
 const express = require('express');
-const postController = require('../controllers/postController');
-
 const router = express.Router();
 
-router.post('/upload', postController.upload);
-router.get('/viewallposts', postController.viewAllPosts);
-router.get('/user/:userid', postController.viewUserId);
-router.put('/update', postController.postUpdate);
-router.delete('/delete', postController.postDelete);
+const postController = require('../controllers/postController');
+
+router.post('/registration', postController.registration);
+router.get('', postController.viewAllPosts);
+router.put('/modification', postController.modification);
+router.delete('/deletion', postController.deletion);
 
 module.exports = {
   router

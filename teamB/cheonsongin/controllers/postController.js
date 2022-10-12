@@ -1,6 +1,6 @@
 const postService = require('../services/postService');
 
-const upload = async (req, res) => {
+const registration = async (req, res) => {
   try {
     const { title, post_image, content, user_id } = req.body;
 
@@ -8,7 +8,7 @@ const upload = async (req, res) => {
       return res.status(400).json({ message: 'KEY_ERROR' });
     }
 
-    await postService.upload( title, post_image, content, user_id );
+    await postService.registration( title, post_image, content, user_id );
     return res.status(201).json({
       message: 'UPLOAD_SUCCESS',
     });
@@ -28,24 +28,7 @@ const viewAllPosts = async (req, res) => {
   }
 };
 
-const viewUserId = async (req, res) => {
-  try {
-    const userId = req.params.userid;
-
-    const data = await postService.viewUserId(userId);
-
-    if ( !userId ) {
-      return res.status(400).json({ message: 'KEY_ERROR' });
-    }
-
-    return res.status(200).json(data);
-  } catch (err) {
-    console.log(err);
-    return res.status(err.statusCode || 500).json({ message: err.message});
-  }
-};
-
-const postUpdate = async (req, res) => {
+const modification = async (req, res) => {
   try {
     const { content, id, user_id } = req.body;
 
@@ -53,7 +36,7 @@ const postUpdate = async (req, res) => {
       return res.status(400).json({ message: 'KEY_ERROR' });
     }
 
-    const data = await postService.postUpdate( content, id, user_id );
+    const data = await postService.modification( content, id, user_id );
 
     return res.status(201).json(data);
   } catch (err) {
@@ -62,7 +45,7 @@ const postUpdate = async (req, res) => {
   }
 };
 
-const postDelete = async (req, res) => {
+const deletion = async (req, res) => {
   try {
     const { postId } = req.body;
 
@@ -80,9 +63,8 @@ const postDelete = async (req, res) => {
 
 
 module.exports = {
-  upload,
+  registration,
   viewAllPosts,
-  viewUserId,
-  postUpdate,
-  postDelete
+  modification,
+  deletion
 }
