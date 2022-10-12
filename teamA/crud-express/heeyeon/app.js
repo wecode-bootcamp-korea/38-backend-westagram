@@ -28,7 +28,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 
 app.get('/ping', function (req, res) {
-    res.status(200).json({ message : 'pong '})
+    res.status(200).json({ message : 'pong'})
 });
 
 app.get('/posts', async (req, res) => {
