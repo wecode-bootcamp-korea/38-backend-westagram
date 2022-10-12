@@ -48,6 +48,6 @@ const like = async (req, res) => {
 
 module.exports = {
 	signUp,
-    userPosting,
-    like
+	userPosting,
+	like
 }
