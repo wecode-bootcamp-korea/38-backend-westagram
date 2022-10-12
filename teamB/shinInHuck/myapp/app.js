@@ -145,6 +145,21 @@ app.delete('/posts/:postId', async(req, res) => {
           `); 
           res.status(200).json({ message : "postingDeleted" });
 });
+
+app.post('/likes', async(req, res) => {
+    const { user_id, post_id } = req.body;
+        
+        await appDataSource.query(
+            `INSERT INTO likse(
+              user_id,
+              post_id
+              )VALUES
+            (?, ?);
+            `,
+            [ user_id, post_id ]
+        );
+    res.status(200).json({ message : "likeCreated" });
+});
           
       
 
