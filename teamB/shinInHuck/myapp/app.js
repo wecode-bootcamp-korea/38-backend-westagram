@@ -1,59 +1,83 @@
-require('dotenv').dotenv.config();
+const dotenv = require('dotenv').config();
 
-const http = require('http');
+const http = require('http'); 
 
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const { DataSource } = require('typeorm');
 
-const appDataSource = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE
-});
-
-appDataSource.initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  });
-
 const app = express();
 
-app.use(express.json());
-app.use(cors());
-app.use(morgan('tiny'));
-app.get('/ping', (req, res) => {
-  res.json({ message : 'pong' });
-});
+const appDataSource = new DataSource({
+    type: process.env.TYPEORM_CONNECTION,
+    host: process.env.TYPEORM_HOST,
+    port: process.env.TYPEORM_PORT,
+    username: process.env.TYPEORM_USERNAME,
+    password: process.env.TYPEORM_PASSWORD,
+    database: process.env.TYPEORM_DATABASE
+})
 
-app.get('/posts/get', async (req, res) => {  
-  await appDataSource.query(
-    `SELECT
-      p.user_id AS userId,
-      u.profile_image AS userProfileImage,
-      p.id AS postingId,
-      p.post_image AS postingImageUrl,
-      p.content AS postingContent
-      FROM users as u, posts as p
-      WHERE users.id = posts.user_id`
-    ,(err, rows) => {
-      res.status(200).json({ data : rows });
-    }
-  );
-});
+appDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!");
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err);
+        appDataSource.destroy()
+    })
 
-const server = http.createServer(app);
 const PORT = process.env.PORT;
 
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
+
+app.get('/ping', (req, res) => {
+    res.status(201).json({message: '!! pong !!'});
+})
+
+app.post('/users', async (req,res) => {
+    const { name, email, profile_image, password } = req.body
+
+    await appDataSource.query(
+        `INSERT INTO users(
+            name,
+            email,
+            profile_image,
+            password
+        ) VALUES (?, ?, ?, ?);
+        `,
+        [name, email, profile_image, password]
+    )
+    res.status(201).json({"message" : "userCreated"});
+})
+
+app.post('/posts', async (req, res) => {
+	const { title, content, user_id} = req.body
+
+	await appDataSource.query(
+		`INSERT INTO posts(
+		    title,
+		    content,
+		    user_id
+		) VALUES (?, ?, ?);
+		`,
+		[ title, content, user_id ]
+	); 
+     res.status(201).json({ "message" : "postCreated" });
+	})
+
+const server = http.createServer(app);
+
 const start = async () => {
-  server.listen(PORT, () => console.log(`server is listening on ${PORT}`));
-}
+    try {
+        app.listen(PORT, ()=> console.log(`!!!!!!!!!!!server listening on port ${PORT}!!!!!!!`));
+    }
+    catch(err){
+        console.error(err);
+    }
+};
+
 start();
