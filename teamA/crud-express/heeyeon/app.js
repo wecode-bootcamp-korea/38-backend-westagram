@@ -31,7 +31,7 @@ app.get('/ping', function (req, res) {
     res.status(200).json({ message : 'pong '})
 });
 
-app.get('/posts/lists', async (req, res, next) => {
+app.get('/posts', async (req, res) => {
 
     await myDataSource.query(
         `SELECT
@@ -46,7 +46,7 @@ app.get('/posts/lists', async (req, res, next) => {
 
 });
 
-app.get('/posts/:userId', async (req, res, next) => {
+app.get('/userposts', async (req, res) => {
     const userId = req.params.userId;
 
     const user = await myDataSource.query(
@@ -71,7 +71,7 @@ app.get('/posts/:userId', async (req, res, next) => {
 
 });
 
-app.post('/users/signup', async (req, res, next) => {
+app.post('/users/signup', async (req, res) => {
     const {name, email, profile_image, password} = req.body
 
     await myDataSource.query(
@@ -89,25 +89,24 @@ app.post('/users/signup', async (req, res, next) => {
 
 });
 
-app.post('/posts/post', async (req, res, next) => {
-    const {id, title, content, user_id} = req.body
+app.post('/posts', async (req, res) => {
+    const {title, content, user_id} = req.body
 
     await myDataSource.query(
         `INSERT INTO posts(
-            id,
             title,
             content,
             user_id
         ) VALUES (?, ?, ?, ?);
         `,
-        [id, title, content, user_id]
+        [title, content, user_id]
     );
 
     res.status(201).json({ message : "postCreated" })
 
 });
 
-app.post('/likes', async (req, res, next) => {
+app.post('/likes', async (req, res) => {
     const {user_id, post_id} = req.body
 
     await myDataSource.query(
@@ -123,7 +122,7 @@ app.post('/likes', async (req, res, next) => {
 
 })
 
-app.patch('/posts', async (req, res, next) => {
+app.patch('/posts', async (req, res) => {
     const {userId, postId, postContent} = req.body;
 
     await myDataSource.query(`
@@ -148,7 +147,7 @@ app.patch('/posts', async (req, res, next) => {
 
 });
 
-app.delete('/posts/:postId', async (req, res, next) => {
+app.delete('/posts/:postId', async (req, res) => {
     const postId = req.params.postId;
 
     await myDataSource.query(
