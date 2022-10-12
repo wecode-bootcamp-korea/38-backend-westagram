@@ -69,9 +69,9 @@ app.post('/posts', async (req, res) => {
      res.status(201).json({ "message" : "postCreated" });
 	})
 
-    app.get('/posts/get', async (req, res) => {  
-        await appDataSource.query(
-          `SELECT
+app.get('/posts/get', async (req, res) => {  
+    await appDataSource.query(
+        `SELECT
             p.user_id AS userId,
             u.profile_image AS userProfileImage,
             p.id AS postingId,
@@ -84,32 +84,34 @@ app.post('/posts', async (req, res) => {
         );
       });
 
-      app.get('/posts/:userId', async (req, res) => {
-        const userId = req.params.userId;
-        const users = await appDataSource.query(
-        `SELECT
-          u.id AS userId,
-          u.profile_image AS userProfileImage
-          FROM users u
-          WHERE id=${userId}`
-        );
-        const posts = await appDataSource.query(
+app.get('/posts/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const users = await appDataSource.query(
+       `SELECT
+        u.id AS userId,
+        u.profile_image AS userProfileImage
+        FROM users u
+        WHERE id=${userId}`
+    );
+const posts = await appDataSource.query(
         `SELECT
           p.id AS postingId,
           p.post_image AS postingImageUrl,
           p.content AS postingContent
           FROM posts p
           WHERE user_id=${userId}`
-        );
-        users[0].postings = posts;
-        res.status(200).json({ data : users[0] });
-        })
+    );
+        
+    users[0].postings = posts;
 
-        app.patch('/posts/:userId', async (req, res) => {
-            const { userId } = req.params;
-            const { content } = req.body;
-            await appDataSource.query(
-              `UPDATE posts
+res.status(200).json({ data : users[0] });
+})
+
+app.patch('/posts/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const { content } = req.body;
+         await appDataSource.query(
+            `UPDATE posts
                 SET
                   posts.content=?
                 WHERE
@@ -117,7 +119,7 @@ app.post('/posts', async (req, res) => {
               `,
               [ content ]
             );
-            await appDataSource.query(
+        await appDataSource.query(
               `SELECT
                 u.id AS userId,
                 u.name AS userName,
@@ -126,10 +128,23 @@ app.post('/posts', async (req, res) => {
                 p.content AS postingContent
               FROM posts AS p
               INNER JOIN users AS u ON p.user_id =${userId} ` 
-              ,(err, rows) => {
+            ,(err, rows) => {
+               
                 res.status(200).json(rows);
-              });
-          });
+             
+            });
+        });
+          
+app.delete('/posts/:postId', async(req, res) => {
+    const { postId } = req.params;
+        
+        await appDataSource.query(
+          `DELETE 
+          FROM posts
+          WHERE posts.id = ${postId}
+          `); 
+          res.status(200).json({ message : "postingDeleted" });
+});
           
       
 
