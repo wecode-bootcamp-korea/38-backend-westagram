@@ -19,12 +19,12 @@ const ServicePatchPosting = async (userId, postingId, content) => {
   return data;
 };
 
-const deletePosting = (postingId) => {
-  return postDao.deletePosting(postingId);
+const deletePosting = async (postingId) => {
+  return await postDao.deletePosting(postingId);
 };
 
-const likePosting = (userId, postingId) => {
-  return postDao.likePosting(userId, postingId);
+const likePosting = async (userId, postingId) => {
+  return await postDao.likePosting(userId, postingId);
 };
 
 module.exports = {
