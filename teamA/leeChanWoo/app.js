@@ -82,7 +82,6 @@ app.get('/posts', async(req, res) => {
 app.get('/posts/:userID', async(req, res) => {
     const { userID } = req.params;
 
-    
     let postD = await myDataSource.query(
         `SELECT
             posts.id AS postingID,
@@ -100,7 +99,33 @@ app.get('/posts/:userID', async(req, res) => {
     
     userD[0].postings= postD;
     res.status(200).json({data : userD[0]});
-    });
+});
+
+app.patch('/posts/:postID', async(req, res) => {
+    const { postID } = req.params;
+    const { content } = req.body;
+    console.log(req.header);
+
+    await myDataSource.query(
+        `UPDATE posts
+            SET
+                posts.content =?
+        WHERE posts.id=${postID}
+        `,[content]);
+
+    let updatedPosts = await myDataSource.query(
+        `SELECT 
+            users.id AS userId,
+            users.name AS userName,
+            posts.id AS postingId,
+            posts.title AS postTitle,
+            posts.content AS postingContent
+        FROM posts
+        INNER JOIN users ON users.id=posts.user_id
+        WHERE posts.id=${postID}`);
+
+    res.status(200).json({data : updatedPosts[0]});
+}); 
 
 const PORT = process.env.PORT;
 
