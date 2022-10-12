@@ -136,6 +136,19 @@ app.delete('/posts/:postID', async(req, res) => {
     res.status(200).json({ message : "postingDeleted"});
 });
 
+app.post('/likes', async(req, res) => {
+    const { user_id, post_id } = req.body;
+
+    await myDataSource.query(
+        `INSERT INTO likes(
+            user_id,
+            post_id
+        )values(?, ?)
+    `,[ user_id, post_id]);
+
+    res.status(201).json({ message : "likeCreated"});
+});
+
 
 const PORT = process.env.PORT;
 
