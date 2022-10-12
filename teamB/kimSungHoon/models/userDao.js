@@ -37,14 +37,14 @@ const createUser = async ( name, email, profile_image, password ) => {
     }
 };
 
-const userPosting = async (id) => {
+const userPosting = async (userId) => {
     try {
         const users = await appDataSource.query(
         `SELECT 
             users.id AS userId,
             users.profile_image AS userProfileImage
         FROM users
-        WHERE id=${id}`
+        WHERE id=${userId}`
         );
 
         const posts = await appDataSource.query(
@@ -53,7 +53,7 @@ const userPosting = async (id) => {
             posts.title AS postingTitle,
             posts.content AS postingContent
         FROM posts
-        WHERE user_id=${id}`   
+        WHERE user_id=${userId}`   
         );  
         console.log(users);
        
@@ -68,24 +68,7 @@ const userPosting = async (id) => {
 	}
 }
 
-const like = async (user_id, post_id) => {
-    try {
-        await appDataSource.query(
-        `INSERT INTO likes(
-            user_id,
-            post_id
-        ) VALUES (?, ?);
-        `, [ user_id, post_id ]    
-        );
-    } catch (err) {
-		const error = new Error('INVALID_DATA_INPUT');
-		error.statusCode = 500;
-		throw error;
-	}
-}
-
 module.exports = {
     createUser,
-    userPosting,
-    like
+    userPosting
   }

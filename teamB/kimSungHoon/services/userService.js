@@ -2,7 +2,7 @@ const userDao = require('../models/userDao');
 
 const signUp = async (name, email, password, profile_image) => {
 
-    const pwValidation = new RegExp(
+    const PASSWORD_REGEX = new RegExp(
         '^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})'
     );
 
@@ -22,21 +22,12 @@ const signUp = async (name, email, password, profile_image) => {
     return createUser;
  };
 
-const userPosting = async (id) => {
-    const result = await userDao.userPosting(id);
+const userPosting = async (userId) => {
+    const result = await userDao.userPosting(userId);
     return result;
  };
 
-const like = async (user_id, post_id) => {
-    const result = await userDao.like(
-        user_id, 
-        post_id
-    );
-    return result;
-}
-
 module.exports = {
     signUp,
-    userPosting,
-    like
+    userPosting
 }

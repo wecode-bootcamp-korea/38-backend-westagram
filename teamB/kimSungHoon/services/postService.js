@@ -14,10 +14,10 @@ const readingPost = async () => {
     return result;
 };
 
-const updatePost = async (content, id) => {
+const updatePost = async (content, postId) => {
     const result = await postDao.updatePost(
         content,
-        id
+        postId
     );
     return result;
 }

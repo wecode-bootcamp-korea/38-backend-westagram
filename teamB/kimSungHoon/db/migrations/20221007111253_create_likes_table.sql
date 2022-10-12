@@ -8,5 +8,6 @@ CREATE TABLE likes (
     CONSTRAINT likes_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
+
 -- migrate:down
 DROP TABLE likes;

@@ -5,9 +5,7 @@ const router = express.Router();
 
 router.post('/signup', userController.signUp);
 
-router.get('/userPosting/:id', userController.userPosting);
-
-router.post('/like', userController.like);
+router.get('/:userId', userController.userPosting);
 
 module.exports = {
     router 

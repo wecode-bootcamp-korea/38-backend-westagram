@@ -1,5 +1,4 @@
 const { DataSource } = require('typeorm');
-// const { deletePost } = require('../services/postService');
 
 const appDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
@@ -57,14 +56,14 @@ const readingPost = async (req, res) => {
 	}
 }
 
-const updatePost = async (content, id) => {
+const updatePost = async (content, postId) => {
     try {
         await appDataSource.query(
         `UPDATE posts
             SET
                 content = ? 
             WHERE id = ?
-      `, [content, id]
+      `, [content, postId]
       );
         return await appDataSource.query(
         `SELECT
@@ -74,7 +73,7 @@ const updatePost = async (content, id) => {
             posts.title AS postingTitle,
             posts.content AS postingContent
         FROM posts,users
-        WHERE users.id = posts.user_id AND posts.id = ${id}
+        WHERE users.id = posts.user_id AND posts.id = ${postId}
         `    
         )
     } catch(err){

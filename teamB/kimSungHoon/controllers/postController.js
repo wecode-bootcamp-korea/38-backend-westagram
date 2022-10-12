@@ -30,12 +30,13 @@ const readingPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
     try {
-        const {content, id} = req.body;
+        const {content} = req.body;
+        const postId = req.params.postId;
 
-        if( !id || !content ){   
+        if( !content ){   
             return res.status(400).json({message: '키 에러 발생'});
         }
-        const data = await postService.updatePost(content, id);
+        const data = await postService.updatePost(content, postId);
         return res.status(201).json(data)
     }
     catch(err){
@@ -57,7 +58,7 @@ const deletePost = async (req, res) => {
 }
 
 module.exports = {
-	createPost,
+	    createPost,
     	readingPost,
     	updatePost,
     	deletePost
