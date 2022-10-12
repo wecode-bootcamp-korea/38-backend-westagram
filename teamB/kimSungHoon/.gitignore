@@ -4,6 +4,7 @@
 ### schema ###
 schema.sql
 
+
 ### dotenv ###
 .env
 
@@ -195,3 +196,4 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,linux,dotenv
+
