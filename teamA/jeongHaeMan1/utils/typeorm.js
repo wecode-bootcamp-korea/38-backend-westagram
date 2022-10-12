@@ -1,6 +1,6 @@
 const { DataSource } = require('typeorm');
 
-const myDataSource = new DataSource({
+const westaDataSource = new DataSource({
     type: process.env.TYPEORM_CONNECTION,
     username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
@@ -9,4 +9,4 @@ const myDataSource = new DataSource({
     database: process.env.TYPEORM_DATABASE
 })
 
-module.exports = myDataSource;
+module.exports = westaDataSource;

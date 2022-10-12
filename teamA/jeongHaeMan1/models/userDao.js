@@ -1,8 +1,8 @@
-const myDataSource = require("../utils/typeorm");
+const westaDataSource = require("../utils/typeorm");
 
 const createUser = async ( name, email, password, profileImage ) => {
     try {
-        return await myDataSource.query(
+        return await westaDataSource.query(
        `INSERT INTO users (name,email,password,profile_image) VALUES (?,?,?,?);`,
         [ name, email, password, profileImage ]
         );
@@ -15,7 +15,7 @@ const createUser = async ( name, email, password, profileImage ) => {
 
 const createSelectUser = async (userId) => {
     try {
-        const user = await myDataSource.query(
+        const user = await westaDataSource.query(
         `SELECT 
             users.id as userId, 
             users.profile_image as userProfileImage
@@ -23,7 +23,7 @@ const createSelectUser = async (userId) => {
         WHERE id=${userId}
         `)
 
-        const posts = await myDataSource.query(
+        const posts = await westaDataSource.query(
         `SELECT
             posts.id as postingId,
             posts.image_url as postingImageUrl,

@@ -1,8 +1,8 @@
-const myDataSource = require("../utils/typeorm");
+const westaDataSource = require("../utils/typeorm");
 
 const createPost = async (title, content, user_id, image_url) => {
     try {
-        return await myDataSource.query(
+        return await westaDataSource.query(
         `INSERT INTO posts(
             title, 
             content, 
@@ -21,7 +21,7 @@ const createPost = async (title, content, user_id, image_url) => {
 
 const createGetPost = async () => {
     try {
-        return await myDataSource.query(
+        return await westaDataSource.query(
         `SELECT 
             users.id as userId, 
             users.profile_image as userProfileImage, 
@@ -40,14 +40,14 @@ const createGetPost = async () => {
 
 const modifyPost = async (content, postId) => {
     try {
-        await myDataSource.query(
+        await westaDataSource.query(
         `UPDATE posts SET
             content = ?
             WHERE id = ?`,
         [content, postId]
         )
 
-        return await myDataSource.query(
+        return await westaDataSource.query(
             `SELECT 
                 users.id as userId, 
                 users.name as userName, 
@@ -68,7 +68,7 @@ const modifyPost = async (content, postId) => {
 
 const deletePost = async (deleteId) => {
     try {
-        return await myDataSource.query(
+        return await westaDataSource.query(
         `DELETE 
             FROM posts
         WHERE id = ${deleteId};

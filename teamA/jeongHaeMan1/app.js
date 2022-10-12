@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const routes = require('./routes');
 
-const myDataSource = require("./utils/typeorm");
+const westaDataSource = require("./utils/typeorm");
 
 const app = express();
 
@@ -22,13 +22,13 @@ const PORT = process.env.PORT;
 
 const startServer = async () => {
     try {
-        myDataSource.initialize()
+        westaDataSource.initialize()
         .then(() => {
             console.log("Data Source has been initialized!");
         })
         .catch((err) => {
             console.error("Error during Data Source initialization", err);
-            myDataSource.destroy();
+            westaDataSource.destroy();
         })
         
         app.listen(PORT, () => 

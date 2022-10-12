@@ -1,9 +1,9 @@
-const myDataSource = require("../utils/typeorm");
+const westaDataSource = require("../utils/typeorm");
 
 
 const likes = async (user_id, post_id) => {
     try {
-        return await myDataSource.query(
+        return await westaDataSource.query(
         `INSERT INTO likes (user_id, post_id) VALUES (?, ?) `,
         [user_id, post_id] 
         )
