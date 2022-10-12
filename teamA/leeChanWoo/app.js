@@ -5,7 +5,6 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
-
 const { DataSource } = require('typeorm');
 
 const myDataSource = new DataSource({
@@ -30,13 +29,10 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-
-// health cheak
 app.get('/ping', function (req, res, next) {
      res.json({message: 'pong'});
 });
 
-// sign-up
 app.post('/users', async (req, res) => {
 	const { name, email, profile_image, password } = req.body
     
@@ -53,8 +49,6 @@ app.post('/users', async (req, res) => {
      res.status(201).json({ message : "userCreated" });
 });
 
-
-// posts에 게시글 등록
 app.post('/posts', async (req, res) => {
 	const { title, content, user_id } = req.body
     
@@ -70,10 +64,9 @@ app.post('/posts', async (req, res) => {
      res.status(201).json({ message : "postCreated" });
 });
 
-// 전체 게시글 조회하기
 app.get('/posts', async(req, res) => {
     await myDataSource.query(
-	`SELECT 
+	    `SELECT 
             users.id AS userId,
             users.profile_image AS userProfileImage,
             posts.id AS postingId,
@@ -86,7 +79,6 @@ app.get('/posts', async(req, res) => {
 	});
 });
 
-// 특정 유저가 작성한 게시글 상세 API
 app.get('/posts/:userID', async(req, res) => {
     const { userID } = req.params;
 
@@ -101,10 +93,10 @@ app.get('/posts/:userID', async(req, res) => {
         
     let userD = await myDataSource.query(
         `SELECT
-                users.id AS userID,
-                users.profile_image AS userProfileImage
-            FROM users
-            WHERE users.id=${userID}`);
+            users.id AS userID,
+            users.profile_image AS userProfileImage
+        FROM users
+        WHERE users.id=${userID}`);
     
     userD[0].postings= postD;
     res.status(200).json({data : userD[0]});
