@@ -1,4 +1,3 @@
-//models/userDao.js
 const { DataSource } = require('typeorm');
 
 const myDataSource = new DataSource({

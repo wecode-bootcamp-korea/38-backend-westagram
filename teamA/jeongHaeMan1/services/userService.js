@@ -1,5 +1,3 @@
-//service/userService.js
-
 const userDao = require('../models/userDao')
 
 const signUp = async (name, email, password, profileImage) => {
