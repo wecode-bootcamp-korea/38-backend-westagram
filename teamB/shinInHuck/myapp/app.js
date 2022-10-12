@@ -104,6 +104,33 @@ app.post('/posts', async (req, res) => {
         users[0].postings = posts;
         res.status(200).json({ data : users[0] });
         })
+
+        app.patch('/posts/:userId', async (req, res) => {
+            const { userId } = req.params;
+            const { content } = req.body;
+            await appDataSource.query(
+              `UPDATE posts
+                SET
+                  posts.content=?
+                WHERE
+                posts.user_id=${userId};
+              `,
+              [ content ]
+            );
+            await appDataSource.query(
+              `SELECT
+                u.id AS userId,
+                u.name AS userName,
+                p.id AS postingId,
+                p.title AS postingTitle,
+                p.content AS postingContent
+              FROM posts AS p
+              INNER JOIN users AS u ON p.user_id =${userId} ` 
+              ,(err, rows) => {
+                res.status(200).json(rows);
+              });
+          });
+          
       
 
 const server = http.createServer(app);
