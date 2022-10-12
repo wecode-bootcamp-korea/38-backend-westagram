@@ -746,5 +746,5 @@ FodyWeavers.xsd
 my_settings.py
 
 #dbmate#
-db/schema.sql 
+schema.sql 
 #
