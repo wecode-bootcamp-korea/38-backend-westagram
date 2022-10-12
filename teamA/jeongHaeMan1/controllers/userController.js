@@ -1,5 +1,3 @@
-//controller/userController.js
-
 const userService = require('../services/userService');
 
 const signUp = async (req, res) => {
@@ -16,9 +14,23 @@ const signUp = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        return res.status(err.statusCode || 500).json({ message : err.meassgae, error:"hi there"});
+        return res.status(err.statusCode || 500).json({ message : err.meassgae});
+    }
+};
+
+const select = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const select = await userService.select(userId);
+
+        return res.status(201).json({ data : select });
+    } catch (err) {
+        console.error(err);
+        return res.status(err.statusCode || 500).json({ message : err.message});
     }
 };
 
 
-module.exports = {signUp}
+module.exports = {
+    signUp, select
+}

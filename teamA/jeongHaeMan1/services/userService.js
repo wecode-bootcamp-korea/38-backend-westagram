@@ -1,5 +1,3 @@
-//service/userService.js
-
 const userDao = require('../models/userDao')
 
 const signUp = async (name, email, password, profileImage) => {
@@ -13,6 +11,13 @@ const signUp = async (name, email, password, profileImage) => {
     return createUser;
 };
 
+const select = async (userId) => {
+    const createSelectUser = await userDao.createSelectUser(userId);
+
+    return createSelectUser;
+
+}
+
 module.exports = {
-    signUp
+    signUp, select
 }

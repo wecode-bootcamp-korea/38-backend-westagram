@@ -1,10 +1,11 @@
 require('dotenv').config();
 
-const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const routes = require('./routes');
+
+const myDataSource = require("./utils/typeorm");
 
 const app = express();
 
@@ -18,16 +19,23 @@ app.get("/ping", (req, res) => {
 });
 
 const PORT = process.env.PORT;
-const server = http.createServer(app);
 
-const start = async () => {
+const startServer = async () => {
     try {
-        server.listen(PORT, () => {
-            console.log(`server is listening on ${PORT}`)
+        myDataSource.initialize()
+        .then(() => {
+            console.log("Data Source has been initialized!");
         })
+        .catch((err) => {
+            console.error("Error during Data Source initialization", err);
+            myDataSource.destroy();
+        })
+        
+        app.listen(PORT, () => 
+            console.log(`server is listening on ${PORT}`))
     } catch (err) {
-        console.error(err)
+        console.log(err);
     }
 }
 
-start();
+startServer()
