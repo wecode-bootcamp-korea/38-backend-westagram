@@ -24,9 +24,9 @@ const createPost = async (title, content, userName, postImage) => {
   try {
     const id = await westa_DB.query(`
       SELECT id 
-        FROM users 
-        WHERE users.name=? ;`,
-    [userName]
+      FROM users 
+      WHERE users.name=? ;`,
+      [userName]
     );
     return await westa_DB.query(`
       INSERT INTO posts (
@@ -34,7 +34,7 @@ const createPost = async (title, content, userName, postImage) => {
         content, 
         user_id, 
         post_image
-      ) VALUES (?,?,?,?)`,
+    ) VALUES (?,?,?,?)`,
       [title, content, id[0].id, postImage]
     );
 
@@ -59,8 +59,8 @@ const updatePost = async (postId, contentChange) => {
   try {
     await westa_DB.query(`
       UPDATE posts 
-        SET content=? 
-          WHERE id=?`, 
+      SET content=? 
+      WHERE id=?`, 
           [contentChange, postId,]
           );
 
@@ -70,8 +70,8 @@ const updatePost = async (postId, contentChange) => {
         posts.id as postingId, 
         posts.title as postingTitle, 
         posts.content AS postingContent 
-          FROM users,posts 
-          WHERE users.id=posts.user_id AND posts.id=?`,
+      FROM users,posts 
+      WHERE users.id=posts.user_id AND posts.id=?`,
         [postId]
     );
   } catch (err) {
@@ -84,9 +84,9 @@ const updatePost = async (postId, contentChange) => {
 const deletingPost = async(postId)=>{
   await westa_DB.query(`
     DELETE 
-      FROM posts 
-      WHERE id=?`,
-      [postId])
+    FROM posts 
+    WHERE id=?`,
+    [postId])
 }
 // DELETE FROM table_name WHERE condition;
 module.exports = { createPost, getPosts, updatePost, deletingPost };
