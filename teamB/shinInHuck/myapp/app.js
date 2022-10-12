@@ -69,6 +69,22 @@ app.post('/posts', async (req, res) => {
      res.status(201).json({ "message" : "postCreated" });
 	})
 
+    app.get('/posts/get', async (req, res) => {  
+        await appDataSource.query(
+          `SELECT
+            p.user_id AS userId,
+            u.profile_image AS userProfileImage,
+            p.id AS postingId,
+            p.post_image AS postingImageUrl,
+            p.content AS postingContent
+            FROM users u, posts p`
+          ,(err, rows) => {
+            res.status(200).json({ data : rows });
+          }
+        );
+      });
+      
+
 const server = http.createServer(app);
 
 const start = async () => {
