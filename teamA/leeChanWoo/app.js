@@ -104,7 +104,6 @@ app.get('/posts/:userID', async(req, res) => {
 app.patch('/posts/:postID', async(req, res) => {
     const { postID } = req.params;
     const { content } = req.body;
-    console.log(req.header);
 
     await myDataSource.query(
         `UPDATE posts
@@ -124,8 +123,19 @@ app.patch('/posts/:postID', async(req, res) => {
         INNER JOIN users ON users.id=posts.user_id
         WHERE posts.id=${postID}`);
 
-    res.status(200).json({data : updatedPosts[0]});
+    res.status(201).json({data : updatedPosts[0]});
 }); 
+
+app.delete('/posts/:postID', async(req, res) => {
+    const { postID } = req.params;
+
+    await myDataSource.query(
+        `DELETE FROM posts
+        WHERE posts.id=${postID}`);
+
+    res.status(200).json({ message : "postingDeleted"});
+});
+
 
 const PORT = process.env.PORT;
 
