@@ -25,13 +25,12 @@ const app = express()
 
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(cors());
 
-// health check
-app.get('/ping', cors(), function (req, res, next) {
+app.get('/ping', function (req, res) {
     res.status(200).json({ message : 'pong '})
 });
 
-// 4. 전체 게시글 조회하기
 app.get('/posts/lists', async (req, res, next) => {
 
     await myDataSource.query(
@@ -42,12 +41,11 @@ app.get('/posts/lists', async (req, res, next) => {
             p.posting_img_url As postingImageUrl,
             p.content As postingContent
         FROM users u, posts p WHERE p.user_id=u.id;`
-    ,(err, rows) => {
-            res.status(200).json({ "data" : rows });
-    })
+    )
+    res.status(200).json({ "data" : rows });
+
 });
 
-// 5. 유저의 게시글 조회하기
 app.get('/posts/:userId', async (req, res, next) => {
     const userId = req.params.userId;
 
@@ -55,7 +53,8 @@ app.get('/posts/:userId', async (req, res, next) => {
         `SELECT
             id AS userId,
             profile_image AS userProfileImage
-        FROM users WHERE id=${userId};`
+        FROM users WHERE id=?;`,
+        [userId]
     );
 
     const post = await myDataSource.query(
@@ -63,7 +62,8 @@ app.get('/posts/:userId', async (req, res, next) => {
             id AS postingId,
             posting_img_url AS postingImageUrl,
             content AS postingContent
-        FROM posts WHERE user_id=${userId};`
+        FROM posts WHERE user_id=?;`,
+        [userId]
     );
 
     user[0]["postings"] = post;
@@ -71,9 +71,8 @@ app.get('/posts/:userId', async (req, res, next) => {
 
 });
 
-// 2. 유저 회원가입 하기
 app.post('/users/signup', async (req, res, next) => {
-    const {id, name, email, profile_image, password} = req.body
+    const {name, email, profile_image, password} = req.body
 
     await myDataSource.query(
         `INSERT INTO users(
@@ -90,7 +89,6 @@ app.post('/users/signup', async (req, res, next) => {
 
 });
 
-// 3. 게시글 등록하기
 app.post('/posts/post', async (req, res, next) => {
     const {id, title, content, user_id} = req.body
 
@@ -109,8 +107,6 @@ app.post('/posts/post', async (req, res, next) => {
 
 });
 
-
-// 8. 좋아요 누르기
 app.post('/likes', async (req, res, next) => {
     const {user_id, post_id} = req.body
 
@@ -127,32 +123,31 @@ app.post('/likes', async (req, res, next) => {
 
 })
 
-// 6. 게시글 수정하기
-app.patch('/posts/:userId/:postId/:postContent', async (req, res, next) => {
-    const userId = req.params.userId;
-    const postId = req.params.postId;
-    const postContent = req.params.postContent;
+app.patch('/posts', async (req, res, next) => {
+    const {userId, postId, postContent} = req.body;
 
-
-    await myDataSource.query(
-        `UPDATE posts SET content='${postContent}' WHERE user_id=${userId} AND id=${postId};`
+    await myDataSource.query(`
+        UPDATE posts
+        SET content=?
+        WHERE user_id=? AND id=?;`,
+        [postContent, userId, postId]
     );
 
-    const data = await myDataSource.query(
-        `SELECT
+    const data = await myDataSource.query(`
+        SELECT
             u.id AS userId,
             u.name AS userName,
             p.id AS postingId,
             p.title AS postingTitle,
             p.content AS postingContent
-        FROM users u, posts p WHERE u.id=${userId} AND p.id=${postId};`
+        FROM users u, posts p WHERE u.id=? AND p.id=?;`,
+        [userId, postId]
     );
 
     res.status(201).json({ "data" : data })
 
 });
 
-// 7. 게시글 삭제하기
 app.delete('/posts/:postId', async (req, res, next) => {
     const postId = req.params.postId;
 
