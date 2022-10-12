@@ -5,7 +5,9 @@ const postUp = async (req, res) => {
     const { title, content, user_id, posting_image } = req.body
 
     if ( !title || !content || !user_id || !posting_image ) {
-      return res.status(400).json({ message : 'KEY_ERROR' });
+      const err = new Error('KEY_ERROR');
+      err.statusCode = 400;
+      throw err
     }
 
     await postService.postUp(title, content, user_id, posting_image);

@@ -18,6 +18,20 @@ const createUser = async (name, email, password, profileImage) => {
   }
 };
 
+const emailList = async () => {
+  try {
+    return await DaoModule.database.query(`
+      SELECT
+        email
+      FROM users`
+    );
+  } catch (err) {
+    const error = new Error('INVALID_DATA_INPUT');
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
 const patchUpdatePost = async (userId, postId, title, content) => {
   try {
     await DaoModule.database.query(`
@@ -50,5 +64,6 @@ const patchUpdatePost = async (userId, postId, title, content) => {
 
 module.exports = {
   createUser,
-  patchUpdatePost
+  patchUpdatePost,
+  emailList
 }
