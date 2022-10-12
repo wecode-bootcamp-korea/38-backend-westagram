@@ -6,7 +6,7 @@ const westa_DB = new DataSource({
   port: process.env.TYPEORM_PORT,
   username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE,
+  database: process.env.TYPEORM_DATABASE
 });
 
 westa_DB
@@ -19,7 +19,9 @@ westa_DB
     westa_DB.destroy();
   });
 
-const createUser = async (name, email, password, profileImage) => {
+const createUser = async(name, email, password, profileImage) => {
+  
+  
   try {
     await westa_DB.query(
       `INSERT INTO users(
@@ -39,13 +41,25 @@ const createUser = async (name, email, password, profileImage) => {
 };
 
 const getUserPosts = async (userName) => {
+  
+  linkingDB.linkDB();
+
   try {
     const userId = await westa_DB.query(`SELECT id FROM users WHERE name=?;`, [
       userName,
     ]);
     const userID = await userId[0].id;
-    const user_posts = await westa_DB.query(
-      `SELECT users.id AS userId, users.profile_image AS userProfileImage, posts.id AS postingId, posts.post_image AS postingImageUrl, posts.content FROM users LEFT JOIN posts ON users.id=posts.user_id WHERE users.id=${userID} ORDER BY posts.id;`
+    const user_posts = await westa_DB.query(`
+      SELECT users.id AS userId, 
+        users.profile_image AS userProfileImage, 
+        posts.id AS postingId, 
+        posts.post_image AS postingImageUrl, 
+        posts.content 
+          FROM users 
+          LEFT JOIN posts 
+          ON users.id=posts.user_id 
+          WHERE users.id=${userID} 
+          ORDER BY posts.id;`
     );
     const postingArr = [];
 

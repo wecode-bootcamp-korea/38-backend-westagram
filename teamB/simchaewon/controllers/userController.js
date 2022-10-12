@@ -37,3 +37,4 @@ const readUserAllPosts = async (req, res) => {
 };
 
 module.exports = { signUp, readUserAllPosts };
+

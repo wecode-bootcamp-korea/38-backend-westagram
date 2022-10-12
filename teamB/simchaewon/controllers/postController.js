@@ -1,9 +1,7 @@
-const { json } = require("express");
 const postService = require("../services/postService");
 
 const upload = async (req, res) => {
-  
-    try {
+  try {
     const { title, content, userName, postImage } = req.body;
 
     if (!title || !content || !userName || !postImage) {
@@ -14,56 +12,51 @@ const upload = async (req, res) => {
     return res.status(201).json({
       message: "POSTUPLOAD_SUCCESS",
     });
-  } 
-  
-  catch (err) {
+  } catch (err) {
     return res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
 const readall = async (req, res) => {
-  try{
-   const posts = await postService.readall();
+  try {
+    const posts = await postService.readall();
     return res.status(200).json({
-      data : posts
+      data: posts,
     });
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
-  catch(err){
-    return res.status(err.statusCode || 500).json({message:err});
-  }
-}
+};
 
-const update=async(req, res)=>{
+const update = async (req, res) => {
   try {
     const { postId, contentChange } = req.body;
-    if(!postId || !contentChange) {
+    if (!postId || !contentChange) {
       return res.status(400).json({ message: "KEY_ERROR" });
     }
-    const changedData= await postService.update(postId, contentChange);
-    return await res.status(200).json({data:changedData});
-  } 
-  catch (err) {
-    return res.status(err.statusCode || 500).json({ message: err });
+    const changedData = await postService.update(postId, contentChange);
+    return await res.status(200).json({ data: changedData });
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
-}
+};
 
-const deletePost = async(req, res) =>{
-  try{
-    const {postId} =req.body;
-    if(!postId){
-      return res.status(400).json({message:"KEY_ERROR"});
+const deletePost = async (req, res) => {
+  try {
+    const { postId } = req.body;
+    if (!postId) {
+      return res.status(400).json({ message: "KEY_ERROR" });
     }
     await postService.deletePost(postId);
-    return await res.status(200).json({message:"postDeleted"});
-  } 
-  catch(err){
-    return res.status(err.statusCode||500).json({message:err});
+    return await res.status(200).json({ message: "postDeleted" });
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
   }
-}
+};
 
 module.exports = {
   upload,
   readall,
   update,
-  deletePost
+  deletePost,
 };

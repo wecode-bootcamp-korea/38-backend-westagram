@@ -3,25 +3,30 @@ const { DataSource } = require("typeorm");
 const westa_DB = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
   host: process.env.TYPEORM_HOST,
-  password: process.env.TYPEORM_PASSWORD,
   port: process.env.TYPEORM_PORT,
-  database: process.env.TYPEORM_DATABASE,
   username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
 });
 
-westa_DB.initialize()
-
+westa_DB
+  .initialize()
   .then(() => {
-    console.log("DATA SOURCE HAS BEEN INITIALIZED!");
-  })
+      console.log("Data Source has been initialized!");
+    })
   .catch((err) => {
-    console.error("Error ocurred during Data Source initialization", err);
-    westa_DB.destroy();
-  });
+      console.error("Error occurred during Data Source initialization", err);
+      westa_DB.destroy();
+    });
+    
+const clickLike=async(userId, postId)=>{
 
-  const clickLike=async(userId, postId)=>{
     try{
-        return await westa_DB.query(`INSERT INTO likes (user_id, post_id) VALUES (?, ?);`,
+        return await westa_DB.query(`
+        INSERT INTO likes (
+          user_id, 
+          post_id
+        ) VALUES (?, ?);`,
         [userId, postId]
         );
     }

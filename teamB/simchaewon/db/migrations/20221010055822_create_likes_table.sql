@@ -4,8 +4,8 @@ CREATE TABLE likes (
     user_id INT NOT NULL,
     post_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    CONSTRAINT likes_user_id_fkby FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT likes_post_id_fkby FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
 -- migrate:down

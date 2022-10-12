@@ -30,5 +30,6 @@ const readUserAllPosts =async(userName)=>{
 }
 
 module.exports = {
-  signUp,readUserAllPosts
+  signUp,
+  readUserAllPosts
 };
