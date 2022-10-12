@@ -1,8 +1,9 @@
+require('dotenv').config();
+
 const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
 
 const { DataSource } = require('typeorm');
 
@@ -26,13 +27,10 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 
-
-// health cheak
 app.get('/ping', function (req, res, next) {
      res.json({message: 'pong'});
 });
 
-// sign-up
 app.post('/users', async (req, res) => {
 	const { name, email, profile_image, password } = req.body
     
