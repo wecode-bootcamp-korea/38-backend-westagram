@@ -210,5 +210,7 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+#DB schema file
+schema.sql
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,linux,dotenv,vim
