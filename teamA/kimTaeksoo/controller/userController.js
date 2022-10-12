@@ -1,9 +1,9 @@
 const userService = require("../service/userService");
 
 const signUp = async (req, res) => {
-  try {
-    const { name, email, profileImage, password } = req.body;
+  const { name, email, profileImage, password } = req.body;
 
+  try {
     if (!name || !email || !profileImage || !password) {
       return res.status(400).json({ message: "KEY_ERROR" });
     }
@@ -12,19 +12,23 @@ const signUp = async (req, res) => {
 
     return res.status(201).json({ message: "UserCreated" });
   } catch (err) {
-    return res.status(err.statusCode || 500).json({ message: err.message });
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
 const userIdMatchPosts = async (req, res) => {
-  const reqUserId = req.params;
+  try {
+    const reqUserId = req.params;
 
-  if (!reqUserId) {
-    return res.status(400).json({ message: "KEY_ERROR" });
+    if (!reqUserId) {
+      return res.status(400).json({ message: "KEY_ERROR" });
+    }
+
+    const data = await userService.userIdMatchPosts(reqUserId);
+    return res.status(200).json({ data });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
-
-  const data = await userService.userIdMatchPosts(reqUserId);
-  return res.status(200).json({ data });
 };
 
 module.exports = { signUp, userIdMatchPosts };

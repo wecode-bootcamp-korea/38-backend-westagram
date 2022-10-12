@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const http = require("http");
 
@@ -17,18 +17,30 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(router);
+app.use((err, req, res, next) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 app.get("/ping", (req, res, next) => {
   res.json({ message: "success" });
 });
 
-myDataSource.initialize().then(() => {
-  console.log("data source has been init");
-});
-
-const start = () => {
+const start = async () => {
   server.listen(PORT, () => {
     console.log(`Open Server with ${PORT}`);
+    myDataSource
+      .initialize()
+      .then(() => {
+        console.log("data source has been init");
+      })
+      .catch((err) => {
+        console.log("data source failed to init", err);
+        myDataSource.destroy();
+      });
   });
 };
 
