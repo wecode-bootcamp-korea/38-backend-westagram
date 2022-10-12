@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
+
 
 const { DataSource } = require('typeorm');
 
@@ -17,13 +19,15 @@ const myDataSource = new DataSource({
 
 myDataSource.initialize()
     .then(() => {
-        console.log("Data Source has been initialized!")
+        console.log("Data Source has been initialized!");
+    }).catch((err) => {
+        console.log("Error :: ", err)
     })
 
 const app = express();
 
 app.use(cors());
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
 app.use(express.json());
 
 
@@ -82,9 +86,29 @@ app.get('/posts', async(req, res) => {
 	});
 });
 
+// 특정 유저가 작성한 게시글 상세 API
+app.get('/posts/:userID', async(req, res) => {
+    const { userID } = req.params;
 
-
-
+    
+    let postD = await myDataSource.query(
+        `SELECT
+            posts.id AS postingID,
+            posts.title AS postingTitle,
+            posts.content AS postingContent
+        FROM posts
+        WHERE posts.user_id=${userID}`);
+        
+    let userD = await myDataSource.query(
+        `SELECT
+                users.id AS userID,
+                users.profile_image AS userProfileImage
+            FROM users
+            WHERE users.id=${userID}`);
+    
+    userD[0].postings= postD;
+    res.status(200).json({data : userD[0]});
+    });
 
 const PORT = process.env.PORT;
 

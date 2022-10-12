@@ -9,5 +9,6 @@ CREATE TABLE posts (
      PRIMARY KEY(id),
      CONSTRAINT posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) 
 );
+
 -- migrate:down
 DROP TABLE posts;
