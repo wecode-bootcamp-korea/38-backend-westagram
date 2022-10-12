@@ -4,7 +4,7 @@ const appDataSource = require('../utils/typeorm');
 
     const specificSearchPost = async ( userId ) => {
         try {
-          const posts = await appDataSource.query(
+          const posts = appDataSource.query(
             `SELECT
                     posts.id as postingId,
                     posts.url_image as postingImageUrl,
@@ -12,6 +12,7 @@ const appDataSource = require('../utils/typeorm');
                 FROM posts
                 WHERE user_id=${userId};`
           );
+
           const users = await appDataSource.query(
             `SELECT
                     users.id as userId,
@@ -19,6 +20,7 @@ const appDataSource = require('../utils/typeorm');
                 FROM users
                 WHERE id=${userId};`
           );
+
           users[0]['postings'] = posts;
       
           return users;
