@@ -5,21 +5,22 @@ const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const router = require("./router");
-const myDataSource = require("./util/datasource");
+const routers = require("./routers");
+
 
 const app = express();
 const server = http.createServer(app);
 
-const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
-app.use(router);
+app.use(routers);
+
+const PORT = process.env.PORT;
 
 app.get("/ping", (req, res, next) => {
-  res.json({ message: "success" });
+  res.json({ message: "pong" });
 });
 
 myDataSource.initialize().then(() => {
@@ -27,9 +28,13 @@ myDataSource.initialize().then(() => {
 });
 
 const start = () => {
-  server.listen(PORT, () => {
-    console.log(`Open Server with ${PORT}`);
-  });
+  try {
+    server.listen(PORT, () => {
+      console.log(`open server PORT:${PORT}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 start();
