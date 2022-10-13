@@ -1,11 +1,17 @@
 const userDao = require("../model/userDao");
+const bcrypt = require("bcrypt");
 
 const signUp = async (name, email, profileImage, password) => {
+  const pwd = password;
+  const saltRounds = 12;
+
+  const hashedPassword = await bcrypt.hash(pwd, saltRounds);
+
   const createUser = await userDao.createUser(
     name,
     email,
     profileImage,
-    password
+    hashedPassword
   );
 
   return createUser;
