@@ -16,6 +16,13 @@ const signUp = async (req, res) => {
   }
 };
 
+const signIn = async (req, res) => {
+  try {
+  } catch (err) {
+    return res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
+
 const userIdMatchPosts = async (req, res) => {
   const reqUserId = req.params;
 

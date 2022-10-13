@@ -17,6 +17,16 @@ const signUp = async (name, email, profileImage, password) => {
   return createUser;
 };
 
+const signIn = async (email, password) => {
+  const pwd = password;
+  const saltRounds = 12;
+
+  const hashedPassword = await bcrypt.hash(pwd, saltRounds);
+  const userdata = await userDao.getUser();
+  const userIndex = await userdata.findIndex((el) => el.email === email);
+  for (let i = 0; i < userdata.length; i++) {}
+};
+
 const userIdMatchPosts = async (reqUserId) => {
   const userMatchPostingData = [];
   const userdata = await userDao.getUser();
