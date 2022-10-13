@@ -15,7 +15,7 @@ myDataSource.initialize()
   })
   .catch((err) => {
     console.error("Error occurred during Data Source initialization", err);
-	  myDataSource.destroy();
+	myDataSource.destroy();
   });
 
 const createUser = async ( name, email, password, profileImage ) => {
