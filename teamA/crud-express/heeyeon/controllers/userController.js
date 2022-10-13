@@ -9,7 +9,7 @@ const signUp = async (res, req) => {
             return res.status(400).json({message: 'KEY_ERROR'});
         }
 
-        await userService(name, email, profile_image, password);
+        await userService.signUp(name, email, profile_image, password);
         return res.status(201).json({message: 'SIGNUP_SUCCESS'});
     } catch(err) {
         console.log(err);
