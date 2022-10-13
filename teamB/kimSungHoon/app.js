@@ -22,7 +22,7 @@ const PORT = process.env.PORT;
 
 const start = async () => {
     try {
-        server.listen(PORT, ()=> console.log(`!!!!!!!!!!!server listening on port ${PORT}!!!!!!!`));
+        server.listen(PORT, ()=> console.log(`server listening on port ${PORT}`));
     }
     catch(err){
         console.error(err);
