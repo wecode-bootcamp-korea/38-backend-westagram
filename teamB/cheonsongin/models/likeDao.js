@@ -1,3 +1,5 @@
+const { appDataSource } = require('../utils/appDataSource');
+
 const postLike = async ( userId, postId ) => {
   try {
     return await appDataSource.query(
