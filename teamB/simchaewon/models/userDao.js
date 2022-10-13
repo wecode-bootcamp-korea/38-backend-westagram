@@ -1,3 +1,4 @@
+const westa_DB=require("../utils/typeorm");
 
 const createUser = async(name, email, password, profileImage) => {
   
@@ -57,7 +58,7 @@ const getUserPosts = async (userName) => {
       postings: postingArr,
     };
 
-    // await console.log(result);
+
 
     return await result;
   } catch (err) {

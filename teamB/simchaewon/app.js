@@ -4,6 +4,8 @@ const express=require("express");
 const cors=require("cors");
 const morgan=require("morgan");
 
+const westa_DB = require("./utils/typeorm")
+
 const routes=require("./routes");
 const app = express();
 
@@ -22,11 +24,19 @@ const PORT = process.env.PORT;
 
 const start = async () => {
   try {
+    westa_DB
+    .initialize()
+    .then(() => {
+      console.log("Data Source has been initialized!");
+    })
+    
     server.listen(PORT, () => {
       console.log(`SERVER IS LISTENING ON PORT : ${PORT}`);
     });
   } catch (err) {
-    console.error(err);
+      console.error("Error occurred during Data Source initialization", err);
+      westa_DB.destroy();
+      console.error(err);
   }
 };
 

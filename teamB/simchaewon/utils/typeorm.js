@@ -9,12 +9,5 @@ const westa_DB = new DataSource({
   database: process.env.TYPEORM_DATABASE
 });
 
-westa_DB
-  .initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error occurred during Data Source initialization", err);
-    westa_DB.destroy();
-  });
+
+module.exports=westa_DB;

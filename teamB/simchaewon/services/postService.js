@@ -1,11 +1,11 @@
 const postDao=require("../models/postDao");
 
-const upload=async(title, content, userName, postImage)=>{
+const upload=async(title, content, userId, postImage)=>{
     
     const createPost = await postDao.createPost(
         title,
         content,
-        userName,
+        userId,
         postImage
     );
     return createPost;

@@ -1,33 +1,7 @@
-const { DataSource } = require("typeorm");
+const westa_DB=require("../utils/typeorm");
 
-const westa_DB = new DataSource({
-  type: process.env.TYPEORM_CONNECTION,
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE,
-});
-
-westa_DB.initialize()
-
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-
-  .catch((err) => {
-    console.error("Error occurred during Data Source initialization", err);
-    westa_DB.destroy();
-  });
-
-const createPost = async (title, content, userName, postImage) => {
+const createPost = async (title, content, userId, postImage) => {
   try {
-    const id = await westa_DB.query(`
-      SELECT id 
-      FROM users 
-      WHERE users.name=? ;`,
-      [userName]
-    );
     return await westa_DB.query(`
       INSERT INTO posts (
         title, 
@@ -35,7 +9,7 @@ const createPost = async (title, content, userName, postImage) => {
         user_id, 
         post_image
     ) VALUES (?,?,?,?)`,
-      [title, content, id[0].id, postImage]
+      [title, content, userId, postImage]
     );
 
   } catch (err) {
@@ -61,7 +35,7 @@ const updatePost = async (postId, contentChange) => {
       UPDATE posts 
       SET content=? 
       WHERE id=?`, 
-          [contentChange, postId,]
+          [contentChange, postId]
           );
 
     return await westa_DB.query(`
@@ -86,7 +60,8 @@ const deletingPost = async(postId)=>{
     DELETE 
     FROM posts 
     WHERE id=?`,
-    [postId])
+    [postId]
+  )
 }
-// DELETE FROM table_name WHERE condition;
+
 module.exports = { createPost, getPosts, updatePost, deletingPost };

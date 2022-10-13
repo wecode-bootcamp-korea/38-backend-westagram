@@ -2,13 +2,13 @@ const postService = require("../services/postService");
 
 const upload = async (req, res) => {
   try {
-    const { title, content, userName, postImage } = req.body;
+    const { title, content, userId, postImage } = req.body;
 
-    if (!title || !content || !userName || !postImage) {
+    if (!title || !content || !userId || !postImage) {
       return res.status(400).json({ message: "KEY_ERROR" });
     }
 
-    await postService.upload(title, content, userName, postImage);
+    await postService.upload(title, content, userId, postImage);
     return res.status(201).json({
       message: "POSTUPLOAD_SUCCESS",
     });
