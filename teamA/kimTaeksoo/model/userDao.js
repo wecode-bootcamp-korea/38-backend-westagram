@@ -19,8 +19,7 @@ const getUser = async () => {
         u.email,
         u.profile_image,
         u.password
-    FROM users as u
-    `
+    FROM users as u`
   );
   return data;
 };
@@ -31,8 +30,7 @@ const userIdMatchPosts = async () => {
         p.user_id as postingId,
         p.posting_image_url as postingImageUrl,
         p.content as postingContent
-    FROM posts as p
-    `
+    FROM posts as p`
   );
   return data;
 };
