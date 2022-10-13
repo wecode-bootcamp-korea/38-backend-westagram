@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const http = require("http");
 
@@ -22,13 +22,12 @@ app.get("/ping", (req, res, next) => {
   res.json({ message: "success" });
 });
 
-myDataSource.initialize().then(() => {
-  console.log("data source has been init");
-});
-
 const start = () => {
   server.listen(PORT, () => {
     console.log(`Open Server with ${PORT}`);
+    myDataSource.initialize().then(() => {
+      console.log("data source has been init");
+    });
   });
 };
 
