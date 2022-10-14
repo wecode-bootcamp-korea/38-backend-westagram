@@ -1,11 +1,10 @@
-const router = require('../routes');
 const postService = require('../services/postService');
 
-const post = async (res, req) => {
+const post = async (req,res) => {
 
     try {
         const {title, content, user_id, posting_img_url} = req.body;
-        if(!title||!content||!user_id||!posting_img_url) {
+        if(!title||!user_id) {
             res.status(400).json({message : 'KEY_ERROR'});
         }
 
@@ -17,6 +16,19 @@ const post = async (res, req) => {
     }
 };
 
-module.export = {
-    post
+const allPosts = async (req, res) => {
+
+    try {
+        const data = await postService.allPosts();
+        return res.status(200).json({"data" : data});
+    } catch (err) {
+        console.log(err);
+        return res.status(err.statusCode||500).json({message: err.message});
+    }
+
+};
+
+module.exports = {
+    post,
+    allPosts
 }

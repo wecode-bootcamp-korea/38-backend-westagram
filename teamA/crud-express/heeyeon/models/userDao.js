@@ -1,13 +1,15 @@
-const createUser = async (name, email, password, profileImage) => {
+const dataSource = require('./dataSource')
+
+const createUser = async (name, email, password, profile_image) => {
     try {
-        return await myDataSource.query(
+        return await dataSource.AppDataSource.query(
             `INSERT INTO users(
                 name,
                 email,
                 password,
                 profile_image
             ) VALUES (?, ?, ?, ?);`,
-            [name, email, password, profileImage]
+            [name, email, password, profile_image]
         );
     } catch (err) {
         const error = new Error('INVALID_DATA_INPUT');
@@ -15,6 +17,14 @@ const createUser = async (name, email, password, profileImage) => {
         throw error;
     }
 };
+
+const login = async(email, password) => {
+    try {
+        return await dataSource.AppDataSource.query(`
+        
+        `)
+    }
+}
 
 module.exports = {
     createUser

@@ -1,7 +1,6 @@
-const router = require('../routes');
 const userService = require('../services/userService');
 
-const signUp = async (res, req) => {
+const signUp = async (req, res) => {
 
     try {
         const {name, email, profile_image, password} = req.body;

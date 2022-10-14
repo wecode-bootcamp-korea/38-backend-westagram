@@ -6,11 +6,6 @@ const morgan = require('morgan');
 require('dotenv').config();
 const routes = require('./routes');
 
-myDataSource.initialize()
-    .then(() => {
-        console.log('Data Source has been initialized!')
-    });
-
 const app = express()
 
 app.use(express.json());
@@ -28,7 +23,7 @@ const PORT = process.env.PORT;
 
 const start = async () => {
     try {
-        app.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
+        server.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
     } catch (err) {
         console.log(err);
     }
