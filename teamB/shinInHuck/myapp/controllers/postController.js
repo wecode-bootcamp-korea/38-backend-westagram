@@ -42,8 +42,26 @@ const viewUserId = async (req, res) => {
     return res.status(err.statusCode || 500).json({ message: err.message});
   }
 };
+
+const postUpdate = async (req, res) => {
+  try {
+    const { content, title, user_id } = req.body;
+
+    if ( !content || !title || !user_id ) {
+      return res.status(400).json({ message: 'KEY_ERROR' });
+    }
+
+    const data = await postService.postUpdate( content, title, user_id );
+
+    return res.status(201).json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
 module.exports = {
   upload,
   viewAllPosts,
-  viewUserId
+  viewUserId,
+  postUpdate
 }
