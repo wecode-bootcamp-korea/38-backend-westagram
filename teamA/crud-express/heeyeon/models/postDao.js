@@ -30,14 +30,42 @@ const getAllPosts = async () => {
             FROM users u, posts p WHERE p.user_id=u.id;`
         );
     } catch (err) {
-        const error = new Error('CANNOT_SHOW_ALL_POSTS');
+        const error = new Error('CANNOT_GET_ALL_POSTS');
         error.statusCode = 500;
         throw error;
     }
 };
 
+const getOnesPosts = async(user_id) => {
+    try {
+        const user = await dataSource.AppDataSource.query(
+        `SELECT
+            id AS userId,
+            profile_image AS userProfileImage
+        FROM users WHERE id=?;`,
+        [user_id]
+        );
+
+        const post = await dataSource.AppDataSource.query(
+        `SELECT
+            id AS postingId,
+            posting_img_url AS postingImageUrl,
+            content AS postingContent
+        FROM posts WHERE user_id=?;`,
+        [user_id]
+        );
+    
+        user[0]["postings"] = post;
+
+    } catch (err) {
+        const error = new Error('CANNOT_GET_ONES_POSTS');
+        error.statusCode = 500;
+        throw error;
+    }
+};
 
 module.exports = {
     createPost,
-    getAllPosts
+    getAllPosts,
+    getOnesPosts
 }
