@@ -21,7 +21,7 @@ const userPosting = async (req, res) => {
     try {
         const userId = req.params.userId;
         const result = await userService.userPosting(userId);
-        return res.status(201).json({ data: result });
+        return res.status(200).json({ data: result });
     }
     catch(err){
         console.log(err);
