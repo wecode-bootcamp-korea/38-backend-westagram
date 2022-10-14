@@ -17,11 +17,11 @@
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comments` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(3000) DEFAULT NULL,
+  `content` varchar(3000) NOT NULL,
   `user_id` int NOT NULL,
   `post_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `comments_user_id_fkey` (`user_id`),
   KEY `comments_post_id_fkey` (`post_id`),
@@ -40,6 +40,7 @@ CREATE TABLE `likes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `post_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `likes_user_id_fkey` (`user_id`),
   KEY `likes_post_id_fkey` (`post_id`),
@@ -60,7 +61,7 @@ CREATE TABLE `posts` (
   `content` varchar(3000) DEFAULT NULL,
   `user_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `posts_user_id_fkey` (`user_id`),
   CONSTRAINT `posts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
@@ -88,17 +89,17 @@ CREATE TABLE `schema_migrations` (
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `profile_image` varchar(1000) DEFAULT NULL,
   `password` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'dbwestar'
+-- Dumping routines for database 'dbcode'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -118,8 +119,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `schema_migrations` WRITE;
 INSERT INTO `schema_migrations` (version) VALUES
-  ('20221010070612'),
-  ('20221010070854'),
-  ('20221010070944'),
-  ('20221010071037');
+  ('20221013154242'),
+  ('20221013154250'),
+  ('20221013154253'),
+  ('20221013154258');
 UNLOCK TABLES;
