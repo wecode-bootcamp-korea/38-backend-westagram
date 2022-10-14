@@ -1,26 +1,8 @@
-const { DataSource } = require('typeorm');
-
-const appDataSource = new DataSource({
-    type: process.env.TYPEORM_CONNECTION,
-    host: process.env.TYPEORM_HOST,
-    port: process.env.TYPEORM_PORT,
-    username: process.env.TYPEORM_USERNAME,
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE
-})
-
-appDataSource.initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!");
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err);
-        appDataSource.destroy()
-    })
+const moduleDao = require('./moduleDao');
 
 const createUser = async ( name, email, profile_image, password ) => {
     try {
-        return await appDataSource.query(
+        return await moduleDao.appDataSource.query(
             `INSERT INTO users(
                 name,
                 email,
@@ -39,7 +21,7 @@ const createUser = async ( name, email, profile_image, password ) => {
 
 const userPosting = async (userId) => {
     try {
-        const users = await appDataSource.query(
+        const users = await moduleDao.appDataSource.query(
         `SELECT 
             users.id AS userId,
             users.profile_image AS userProfileImage
@@ -47,7 +29,7 @@ const userPosting = async (userId) => {
         WHERE id=${userId}`
         );
 
-        const posts = await appDataSource.query(
+        const posts = await moduleDao.appDataSource.query(
         `SELECT
             posts.id AS postingId,
             posts.title AS postingTitle,
@@ -56,7 +38,6 @@ const userPosting = async (userId) => {
         WHERE user_id=${userId}`   
         );  
         console.log(users);
-       
         
         users[0]['postings'] = posts;
         return users;
