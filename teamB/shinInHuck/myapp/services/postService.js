@@ -28,9 +28,19 @@ const postUpdate = async (content, title, user_id) => {
   return updatePost;
 }
 
+
+const postDelete = async (postId) => {
+  const deletePost = await postDao.deletePost(
+    postId
+  );
+
+  return deletePost;
+}
+
 module.exports = {
   upload,
   viewAllPosts,
   viewUserId,
-  postUpdate
+  postUpdate,
+  postDelete
 }
