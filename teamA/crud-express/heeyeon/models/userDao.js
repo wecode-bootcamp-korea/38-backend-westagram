@@ -18,14 +18,6 @@ const createUser = async (name, email, password, profile_image) => {
     }
 };
 
-const login = async(email, password) => {
-    try {
-        return await dataSource.AppDataSource.query()
-    } catch(err) {
-        
-    }
-}
-
 module.exports = {
     createUser
 }
