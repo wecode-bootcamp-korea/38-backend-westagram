@@ -12,8 +12,18 @@ const onesPosts = async(user_id) => {
     return await postDao.getOnesPosts(user_id);
 };
 
+const updatePost = async(title, content, posting_img_url, user_id, post_id) => {
+    return await postDao.updatePost(title, content, posting_img_url, user_id, post_id);
+};
+
+const deletePost = async(post_id) => {
+    return await postDao.deletePost(post_id);
+};
+
 module.exports = {
     post,
     allPosts,
-    onesPosts
+    onesPosts,
+    updatePost,
+    deletePost
 }
