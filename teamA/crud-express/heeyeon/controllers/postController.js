@@ -5,7 +5,9 @@ const post = async (req,res) => {
     try {
         const {title, content, user_id, posting_img_url} = req.body;
         if(!title||!user_id) {
-            res.status(400).json({message : 'KEY_ERROR'});
+            const err = new Error('KEY_ERROR');
+            err.statusCode = 400;
+            throw err;
         }
 
         await postService.post(title, content, user_id, posting_img_url);
@@ -33,7 +35,9 @@ const onesPosts = async(req, res) => {
     try {
         const user_id = req.params.user_id;
         if(!user_id) {
-            res.status(400).json({message:'KEY_ERROR'});
+            const err = new Error('KEY_ERROR');
+            err.statusCode = 400;
+            throw err;
         }
 
         const user = await postService.onesPosts(user_id);
@@ -52,7 +56,9 @@ const updatePost = async(req, res) => {
         const {title, content, posting_img_url, user_id} = req.body;
 
         if(!title || !post_id || !user_id) {
-            res.status(400).json({message : 'KEY_ERROR'});
+            const err = new Error('KEY_ERROR');
+            err.statusCode = 400;
+            throw err;
         }
 
         const data = await postService.updatePost(title, content, posting_img_url, user_id, post_id);
@@ -70,7 +76,9 @@ const deletePost = async(req, res) => {
         const post_id = req.params.post_id;
 
         if(!post_id) {
-            res.status(400).json({message : 'KEY_ERROR'});
+            const err = new Error('KEY_ERROR');
+            err.statusCode = 400;
+            throw err;
         }
 
         await postService.deletePost(post_id);
