@@ -1,4 +1,5 @@
 const postService = require("../service/postService");
+const asyncwrap = require("../middleware/errorMiddleware");
 
 const posting = async (req, res) => {
   try {
@@ -10,8 +11,8 @@ const posting = async (req, res) => {
 
     await postService.posting(title, content, userId, postingImageUrl);
     return res.status(201).json({ message: "postCreated" });
-  } catch (error) {
-    return res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
@@ -21,8 +22,8 @@ const allPosts = async (req, res) => {
     return res.status(200).json({
       data,
     });
-  } catch (error) {
-    return res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
@@ -36,8 +37,8 @@ const patchPosting = async (req, res) => {
       content
     );
     return res.status(200).json({ data });
-  } catch (error) {
-    return res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
@@ -46,8 +47,8 @@ const deletePosting = async (req, res) => {
     const { postingId } = req.params;
     await postService.deletePosting(postingId);
     return res.status(200).json({ message: "postingDeleted" });
-  } catch (error) {
-    return res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
@@ -58,8 +59,8 @@ const likePosting = async (req, res) => {
     await postService.likePosting(userId, postingId);
 
     res.status(200).json({ message: "likeCreated" });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ message: error.message });
+  } catch (err) {
+    res.json({ "Error Code": err.statusCode, "Error message": err.message });
   }
 };
 
