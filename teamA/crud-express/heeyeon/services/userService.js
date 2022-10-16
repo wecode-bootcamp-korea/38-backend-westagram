@@ -15,6 +15,5 @@ const signUp = async (name, email, profile_image, password) => {
 };
 
 module.exports = {
-    signUp,
-    signIn
+    signUp
 }
