@@ -1,6 +1,6 @@
 const myDataSource = require("../util/datasource");
 
-const createUser = async (name, email, profileImage, password) => {
+const createUser = async (name, email, profileImage, hashedPassword) => {
   await myDataSource.query(
     `INSERT INTO users (
         name,
@@ -8,7 +8,7 @@ const createUser = async (name, email, profileImage, password) => {
         profile_image,
         password
     ) VALUES (?,?,?,?)`,
-    [name, email, profileImage, password]
+    [name, email, profileImage, hashedPassword]
   );
 };
 

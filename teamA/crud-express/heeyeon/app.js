@@ -1,9 +1,10 @@
+require('dotenv').config();
+
 const http = require('http');
 
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-require('dotenv').config();
 const routes = require('./routes');
 
 const app = express()
@@ -16,7 +17,6 @@ app.use(routes);
 app.get('/ping', function (req, res) {
     res.status(200).json({ message : 'pong'})
 });
-
 
 const server = http.createServer(app);
 const PORT = process.env.PORT;
