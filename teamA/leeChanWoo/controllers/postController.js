@@ -1,14 +1,18 @@
-const postService = require('../services/postService');
+const { postService } = require('../services');
 
 const posting = async (req, res) => { 
      const { title, content, user_id } = req.body;
 
-     await postService.posting( title, content, user_id );
-     
-     return res.status(201).json({ message : "postCreated"});
+     try {
+          await postService.posting( title, content, user_id );
+          
+          return res.status(201).json({ message : "postCreated"});
+     } catch (error) {
+          res.status(error.statusCode).json({ message : error.message });
+     }
 }
 
-const viewPost = async () => { 
+const viewPost = async (req, res) => { 
 
      const allPost = await postService.viewPost();
      

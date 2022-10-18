@@ -1,5 +1,4 @@
-const postDao = require('../models/postDao');
-const { post } = require('../routers');     // ???????????????
+const { postDao } = require('../models');
 
  const posting = async ( title, content, user_id ) => {
      const createPost = await postDao.createPost(

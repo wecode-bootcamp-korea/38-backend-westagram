@@ -1,4 +1,4 @@
-const likesService = require('../services/likesService');
+const { likesService } = require('../services');
 
 const posting = async (req, res) => { 
      const { user_id, post_id } = req.body;
