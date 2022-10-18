@@ -1,5 +1,5 @@
 {
-  "name": "leechanwoo",
+  "name": "layered-pattern",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -12,8 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dbmate": "^1.0.3",
     "dotenv": "^16.0.3",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "mysql2": "^2.3.3",
     "typeorm": "^0.3.10"
   },
